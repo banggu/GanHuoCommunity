@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".module.main.MainActivity"
     android:divider="@drawable/divider"
@@ -13,6 +14,15 @@
         android:layout_height="0dp"
         android:layout_weight="1"></FrameLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/write_article_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/add"
+        app:rippleColor="#56abe4"
+        app:backgroundTint="#56abe4"/>
     <include layout="@layout/tab_layout"/>
 
 </LinearLayout>

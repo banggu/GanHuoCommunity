@@ -12,4 +12,10 @@
     <string name="welcome_to_login">登录干货社区</string>
     <string name="login">登录</string>
     <string name="goto_register">去注册></string>
+
+    <!-- 添加文章 -->
+    <string name="article_title">文章标题</string>
+    <string name="article_type">类型</string>
+    <string name="article_content">添加文章内容</string>
+
 </resources>
