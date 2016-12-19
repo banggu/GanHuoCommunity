@@ -13,6 +13,21 @@ public class AddArticlePresenterImpl implements AddArticlePresenter{
     }
 
     @Override
+    public void uploadImage(String imageUrl) {
+        mModel.uploadImage(imageUrl);
+    }
+
+    @Override
+    public void onUploadImageSuccess(String imageUrl) {
+        mView.insertImage(imageUrl, "本地图片");
+    }
+
+    @Override
+    public void onUploadImageFailtrue(String errMsg) {
+
+    }
+
+    @Override
     public void postArticle(String title, String type, String imageUrl, String content) {
         mModel.postArticle(title, type, imageUrl, content);
     }

@@ -31,6 +31,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".module.register.RegisterActivity"></activity>
+        <activity android:name=".module.addarticle.AddArticleActivity"></activity>
     </application>
 
 </manifest>

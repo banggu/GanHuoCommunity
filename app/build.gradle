@@ -25,4 +25,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'cn.bmob.android:bmob-sdk:3.5.0'
     compile 'com.android.support:design:22.2.1'
+    compile 'jp.wasabeef:richeditor-android:1.2.1'
 }

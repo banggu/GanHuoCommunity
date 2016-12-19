@@ -11,26 +11,26 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:src="@drawable/homeicon_pressed" />
+        android:src="@drawable/ic_home_pressed" />
 
     <ImageView
         android:id="@+id/hot_imageView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:src="@drawable/hoticon_nor" />
+        android:src="@drawable/ic_hotnews" />
 
     <ImageView
         android:id="@+id/bell_imageView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:src="@drawable/bellicon_nor" />
+        android:src="@drawable/ic_bell" />
 
     <ImageView
         android:id="@+id/me_imageView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:src="@drawable/meicon_nor" />
+        android:src="@drawable/ic_me" />
 </LinearLayout>

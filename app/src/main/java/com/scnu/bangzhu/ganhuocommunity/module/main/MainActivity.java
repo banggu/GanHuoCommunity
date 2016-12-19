@@ -1,5 +1,7 @@
 package com.scnu.bangzhu.ganhuocommunity.module.main;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +10,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.scnu.bangzhu.ganhuocommunity.R;
+import com.scnu.bangzhu.ganhuocommunity.module.addarticle.AddArticleActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    private FloatingActionButton mAddArticle;
     private ImageView mHomeIcon, mHotNewsIcon, mMsgIcon, mMeIcon;
     private HomeFragment mHomeFragment;
     private HotNewsFragment mHotNewsFragment;
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView() {
+        mAddArticle = (FloatingActionButton) findViewById(R.id.write_article_fab);
         mHomeIcon = (ImageView) findViewById(R.id.home_imageView);
         mHotNewsIcon = (ImageView) findViewById(R.id.hot_imageView);
         mMsgIcon = (ImageView) findViewById(R.id.bell_imageView);
@@ -33,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setListener() {
+        mAddArticle.setOnClickListener(this);
         mHomeIcon.setOnClickListener(this);
         mHotNewsIcon.setOnClickListener(this);
         mMsgIcon.setOnClickListener(this);
@@ -43,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         resetIcons();
        switch(view.getId()) {
+           case R.id.write_article_fab:
+               gotoAddArticle();
+               break;
            case R.id.home_imageView :
                setFragmentSelect(0);
                break;
@@ -58,6 +67,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        }
     }
 
+    private void gotoAddArticle() {
+        Intent intent = new Intent(this, AddArticleActivity.class);
+        startActivity(intent);
+    }
+
     private void setFragmentSelect(int index) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTrasaction = fm.beginTransaction();
@@ -71,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     fragmentTrasaction.show(mHomeFragment);
                 }
-                mHomeIcon.setImageResource(R.drawable.homeicon_pressed);
+                mHomeIcon.setImageResource(R.drawable.ic_home_pressed);
                 break;
             case 1 :
                 if(mHotNewsFragment == null) {
@@ -80,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     fragmentTrasaction.show(mHotNewsFragment);
                 }
-                mHotNewsIcon.setImageResource(R.drawable.hoticon_pressed);
+                mHotNewsIcon.setImageResource(R.drawable.ic_hotnews_pressed);
                 break;
             case 2 :
                 if(mMsgFragment == null) {
@@ -89,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     fragmentTrasaction.show(mMsgFragment);
                 }
-                mMsgIcon.setImageResource(R.drawable.bellicon_pressed);
+                mMsgIcon.setImageResource(R.drawable.ic_bell_pressed);
                 break;
             case 3 :
                 if(mMeFragememt == null) {
@@ -98,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     fragmentTrasaction.show(mMeFragememt);
                 }
-                mMeIcon.setImageResource(R.drawable.meicon_pressed);
+                mMeIcon.setImageResource(R.drawable.ic_me_pressed);
                 break;
         }
         fragmentTrasaction.commit();
@@ -120,9 +134,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void resetIcons() {
-        mHomeIcon.setImageResource(R.drawable.homeicon_nor);
-        mHotNewsIcon.setImageResource(R.drawable.hoticon_nor);
-        mMsgIcon.setImageResource(R.drawable.bellicon_nor);
-        mMeIcon.setImageResource(R.drawable.meicon_nor);
+        mHomeIcon.setImageResource(R.drawable.ic_home);
+        mHotNewsIcon.setImageResource(R.drawable.ic_hotnews);
+        mMsgIcon.setImageResource(R.drawable.ic_bell);
+        mMeIcon.setImageResource(R.drawable.ic_me);
     }
 }

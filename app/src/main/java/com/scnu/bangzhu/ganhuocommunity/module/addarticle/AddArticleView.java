@@ -8,5 +8,7 @@ public interface AddArticleView {
 
     void setArticleType(String type);
 
+    void insertImage(String imageUrl, String alt);
+
     void setArticlContent(String content);
 }

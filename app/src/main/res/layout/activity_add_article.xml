@@ -4,16 +4,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp">
+    android:layout_marginRight="15dp"
+    android:divider="@drawable/divider"
+    android:showDividers="end">
     <EditText
         android:id="@+id/article_title_editText"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="@string/article_title"/>
+        android:hint="@string/article_title"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"/>
+
     <EditText
         android:id="@+id/article_type_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/article_type"/>
+        android:hint="@string/article_type"
+        android:layout_marginTop="10dp"/>
 
+    <jp.wasabeef.richeditor.RichEditor
+        android:id="@+id/rich_editor"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="5dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="15dp">
+        <ImageView
+            android:id="@+id/post_article_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_sent"
+            android:layout_alignParentRight="true" />
+        <ImageView
+            android:id="@+id/insert_image_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_image"
+            android:layout_toLeftOf="@+id/post_article_imageView"
+            android:layout_marginRight="10dp"/>
+    </RelativeLayout>
 </LinearLayout>
