@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,9 +13,14 @@ import android.provider.MediaStore;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scnu.bangzhu.ganhuocommunity.BaseActivity;
@@ -25,7 +31,7 @@ import jp.wasabeef.richeditor.RichEditor;
 /**
  * Created by chenjianbang on 2016/12/15.
  */
-public class AddArticleActivity extends BaseActivity implements AddArticleView, View.OnClickListener{
+public class AddArticleActivity extends BaseActivity implements AddArticleView, View.OnClickListener {
     private EditText mArticleTitle, mArticleType;
     private RichEditor mRichEditor;
     private ImageView mInsertImage, mPostArticle;
@@ -40,7 +46,6 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
     }
 
     private void initView() {
-        ViewPager viewPager;
         mArticleTitle = (EditText) findViewById(R.id.article_title_editText);
         mArticleType = (EditText) findViewById(R.id.article_type_editText);
         mRichEditor = (RichEditor) findViewById(R.id.rich_editor);
@@ -78,8 +83,14 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.insert_image_imageView:
+                showChooseImagePopwindow();
+                //chooseImageFromAlbum();
+                break;
+            case R.id.take_photo_textView:
+                break;
+            case R.id.album_textView:
                 chooseImageFromAlbum();
                 break;
             case R.id.post_article_imageView:
@@ -87,7 +98,24 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
         }
     }
 
+    private void showChooseImagePopwindow() {
+        View view = LayoutInflater.from(this).inflate(R.layout.layout_get_image_popwindow, null, false);
+        TextView takePhoto = (TextView) view.findViewById(R.id.take_photo_textView);
+        TextView album = (TextView) view.findViewById(R.id.album_textView);
 
+        final PopupWindow popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setTouchable(true);
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return false;
+            }
+        });
+        popupWindow.setBackgroundDrawable(new ColorDrawable(R.color.popWindowBackground));
+        popupWindow.showAsDropDown(mInsertImage, -50, 50);
+        takePhoto.setOnClickListener(this);
+        album.setOnClickListener(this);
+    }
 
     private void chooseImageFromAlbum() {
         Intent intent = new Intent();
@@ -98,18 +126,16 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
             Uri imageUri = null;
             String imagePath = null;
-            if(requestCode == 12581) {
-                if(data == null)
-                {
+            if (requestCode == 12581) {
+                if (data == null) {
                     Toast.makeText(this, "选择图片文件出错", Toast.LENGTH_LONG).show();
                     return;
                 }
                 imageUri = data.getData();
-                if(imageUri == null )
-                {
+                if (imageUri == null) {
                     Toast.makeText(this, "选择图片文件出错", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -125,7 +151,7 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
 //                    mPresenter.uploadImage(imagePath);
 //                    cursor.close();
 //                }
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     imagePath = getImagePathKitKat(imageUri);
                 } else {
                     imagePath = getImagePathBeforeKitKat(imageUri);
@@ -140,37 +166,37 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
     private String getImagePathKitKat(Uri uri) {
         String imagePath = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (DocumentsContract.isDocumentUri(this,uri)){
+            if (DocumentsContract.isDocumentUri(this, uri)) {
                 //如果是document类型的uri 则通过id进行解析处理
                 String docId = DocumentsContract.getDocumentId(uri);
-                if ("com.android.providers.media.documents".equals(uri.getAuthority())){
+                if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
                     //解析出数字格式id
                     String id = docId.split(":")[1];
-                    String selection = MediaStore.Images.Media._ID + "=" +id;
-                    imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,selection);
-                }else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())){
+                    String selection = MediaStore.Images.Media._ID + "=" + id;
+                    imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+                } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
                     Uri contentUri = ContentUris.withAppendedId(Uri.parse("" +
-                            "content://downloads/public_downloads"),Long.valueOf(docId));
-                    imagePath = getImagePath(contentUri,null);
+                            "content://downloads/public_downloads"), Long.valueOf(docId));
+                    imagePath = getImagePath(contentUri, null);
                 }
-            }else if ("content".equals(uri.getScheme())){
+            } else if ("content".equals(uri.getScheme())) {
                 //如果不是document类型的uri，则使用普通的方式处理
-                imagePath = getImagePath(uri,null);
+                imagePath = getImagePath(uri, null);
             }
             return imagePath;
         }
         return null;
     }
 
-    private String getImagePathBeforeKitKat(Uri uri){
-        String imagePath = getImagePath(uri,null);
+    private String getImagePathBeforeKitKat(Uri uri) {
+        String imagePath = getImagePath(uri, null);
         return imagePath;
     }
 
     private String getImagePath(Uri uri, String seletion) {
         String path = null;
-        Cursor cursor = getContentResolver().query(uri,null,seletion,null,null);
-        if (cursor != null){
+        Cursor cursor = getContentResolver().query(uri, null, seletion, null, null);
+        if (cursor != null) {
             if (cursor.moveToFirst()) {
                 path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
             }
