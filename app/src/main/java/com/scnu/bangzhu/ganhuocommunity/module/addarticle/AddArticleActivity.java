@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -26,6 +27,10 @@ import android.widget.Toast;
 import com.scnu.bangzhu.ganhuocommunity.BaseActivity;
 import com.scnu.bangzhu.ganhuocommunity.R;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import jp.wasabeef.richeditor.RichEditor;
 
 /**
@@ -36,6 +41,7 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
     private RichEditor mRichEditor;
     private ImageView mInsertImage, mPostArticle;
     private AddArticlePresenter mPresenter;
+    private Uri mImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +95,7 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
                 //chooseImageFromAlbum();
                 break;
             case R.id.take_photo_textView:
+                takePhoto();
                 break;
             case R.id.album_textView:
                 chooseImageFromAlbum();
@@ -111,10 +118,36 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
                 return false;
             }
         });
-        popupWindow.setBackgroundDrawable(new ColorDrawable(R.color.popWindowBackground));
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
         popupWindow.showAsDropDown(mInsertImage, -50, 50);
         takePhoto.setOnClickListener(this);
         album.setOnClickListener(this);
+    }
+
+    private void takePhoto() {
+        //以系统时间作为该文件命名
+        SimpleDateFormat formatter  =   new SimpleDateFormat("yyyy年MM月dd日HH-mm-ss");
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String str = formatter.format(curDate);
+        //建立file文件用于保存来拍照后的图片
+        File outputFile = new File(Environment.getExternalStorageDirectory(), str+".jpg");
+        /**
+         * 使用隐式intent进行跳转
+         */
+        try {
+            if (outputFile.exists()){
+                outputFile.delete();
+            }
+            outputFile.createNewFile();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        mImageUri = Uri.fromFile(outputFile);
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+        //启动相机程序
+        startActivityForResult(intent, 12580);
     }
 
     private void chooseImageFromAlbum() {
@@ -158,6 +191,9 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
                 }
                 Log.i("HZWING", "image path" + imagePath);
                 mPresenter.uploadImage(imagePath);
+            } else if(requestCode == 12580) {
+                Log.i("HZWING", mImageUri.getPath());
+                mPresenter.uploadImage(mImageUri.getPath().toString());
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

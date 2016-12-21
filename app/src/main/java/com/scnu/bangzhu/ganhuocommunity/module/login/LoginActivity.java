@@ -2,12 +2,14 @@ package com.scnu.bangzhu.ganhuocommunity.module.login;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.scnu.bangzhu.ganhuocommunity.GanHuoCache;
 import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.module.main.MainActivity;
 import com.scnu.bangzhu.ganhuocommunity.module.register.RegisterActivity;
@@ -21,8 +23,10 @@ import cn.bmob.v3.BmobConfig;
 public class LoginActivity extends Activity implements LoginView, View.OnClickListener{
     private TextView mGotoRegister;
     private EditText mUsername, mPassword;
+    private String mAccount, mPwd;
     private Button mLogin;
     private LoginPresenter mPresenter;
+    private SharedPreferences mPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,15 @@ public class LoginActivity extends Activity implements LoginView, View.OnClickLi
         mPassword = (EditText) findViewById(R.id.password_login_editText);
         mLogin = (Button) findViewById(R.id.login_button);
         mPresenter = new LoginPresenterImpl(this);
+        mPreference = getSharedPreferences("login",MODE_PRIVATE);
+
+        boolean isLogin = mPreference.getBoolean("isLogin", false);
+        if(isLogin) {
+            String account = mPreference.getString("account", "account");
+            GanHuoCache.setAccount(account);
+            GanHuoCache.setContext(this);
+            navigateToMain();
+        }
     }
 
     private void setListener() {
@@ -78,6 +91,11 @@ public class LoginActivity extends Activity implements LoginView, View.OnClickLi
 
     @Override
     public void navigateToMain() {
+        mPreference.edit().putBoolean("isLogin", true).commit();
+        mPreference.edit().putString("account", mAccount).commit();
+        mPreference.edit().putString("password", mPwd).commit();
+        GanHuoCache.setAccount(mAccount);
+        GanHuoCache.setContext(this);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -91,7 +109,9 @@ public class LoginActivity extends Activity implements LoginView, View.OnClickLi
                 break;
 
             case R.id.login_button :
-                mPresenter.login(mUsername.getText().toString(), mPassword.getText().toString());
+                mAccount = mUsername.getText().toString();
+                mPwd = mPassword.getText().toString();
+                mPresenter.login(mAccount, mPwd);
                 break;
         }
     }
