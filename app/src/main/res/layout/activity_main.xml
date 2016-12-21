@@ -23,6 +23,6 @@
         android:src="@drawable/add"
         app:rippleColor="#56abe4"
         app:backgroundTint="#56abe4"/>
-    <include layout="@layout/tab_layout"/>
+    <include layout="@layout/layout_tab"/>
 
 </LinearLayout>

@@ -17,5 +17,7 @@
     <string name="article_title">文章标题</string>
     <string name="article_type">类型</string>
     <string name="article_content">添加文章内容</string>
+    <string name="take_photo">拍照</string>
+    <string name="album">相册</string>
 
 </resources>
