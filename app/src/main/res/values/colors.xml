@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="popWindowBackground">#E7E7E7</color>
+    <color name="colorPrimaryWhite">#ffffff</color>
 </resources>

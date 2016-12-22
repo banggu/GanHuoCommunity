@@ -1,6 +1,7 @@
 package com.scnu.bangzhu.ganhuocommunity.module.main;
 
-import android.support.v4.app.Fragment;
+
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,7 +13,7 @@ import com.scnu.bangzhu.ganhuocommunity.R;
 /**
  * Created by bangzhu on 2016/12/5.
  */
-public class HomeFragment extends Fragment{
+public class HomeFragment extends Fragment {
     private View mView;
     @Nullable
     @Override

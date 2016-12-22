@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.scnu.bangzhu.ganhuocommunity.BaseActivity;
 import com.scnu.bangzhu.ganhuocommunity.GanHuoCache;
 import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.module.main.MainActivity;
@@ -20,7 +21,7 @@ import cn.bmob.v3.BmobConfig;
 /**
  * Created by chenjianbang on 2016/12/12.
  */
-public class LoginActivity extends Activity implements LoginView, View.OnClickListener{
+public class LoginActivity extends BaseActivity implements LoginView, View.OnClickListener{
     private TextView mGotoRegister;
     private EditText mUsername, mPassword;
     private String mAccount, mPwd;
