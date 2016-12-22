@@ -10,7 +10,7 @@ public interface AddArticlePresenter {
 
     void onUploadImageFailtrue(String errMsg);
 
-    void postArticle(String title, String type, String imageUrl, String content);
+    void postArticle(String user, String title, String type, String imageUrl, String content);
 
     void onPostArticleSuccess();
 

@@ -11,4 +11,6 @@ public interface AddArticleView {
     void insertImage(String imageUrl, String alt);
 
     void setArticlContent(String content);
+
+    void navigateToMain();
 }

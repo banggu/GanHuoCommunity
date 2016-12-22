@@ -25,7 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scnu.bangzhu.ganhuocommunity.BaseActivity;
+import com.scnu.bangzhu.ganhuocommunity.GanHuoCache;
 import com.scnu.bangzhu.ganhuocommunity.R;
+import com.scnu.bangzhu.ganhuocommunity.config.Contants;
+import com.scnu.bangzhu.ganhuocommunity.module.main.MainActivity;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -88,6 +91,13 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
     }
 
     @Override
+    public void navigateToMain() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.insert_image_imageView:
@@ -101,6 +111,7 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
                 chooseImageFromAlbum();
                 break;
             case R.id.post_article_imageView:
+                postArticle();
                 break;
         }
     }
@@ -131,9 +142,6 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
         String str = formatter.format(curDate);
         //建立file文件用于保存来拍照后的图片
         File outputFile = new File(Environment.getExternalStorageDirectory(), str+".jpg");
-        /**
-         * 使用隐式intent进行跳转
-         */
         try {
             if (outputFile.exists()){
                 outputFile.delete();
@@ -239,5 +247,22 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
             cursor.close();
         }
         return path;
+    }
+
+    private void postArticle() {
+        String user = GanHuoCache.getAccount();
+        SimpleDateFormat formatter  =   new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String curTime = formatter.format(curDate);
+        String title = mArticleTitle.getText().toString();
+        String type = mArticleType.getText().toString();
+        String image = mRichEditor.getHtml();
+        int startIndex = image.indexOf("\"");
+        int endIndex = image.indexOf("\"", startIndex+1);
+        String imageUrl = image.substring(startIndex, endIndex+1);
+        String content = Contants.PAGE_HEADER + Contants.PAGE_ARTICLE_TITLE_PRE + title + Contants.PAGE_ARTICLE_TITLE_POST +
+                        Contants.PAGE_ARTICLE_ACCOUNT_PRE + user +" " + curTime + Contants.PAGE_ARTICLE_ACCOUNT_POST +
+                        Contants.PAGE_ARTICLE_CONTENT_PRE + image + Contants.PAGE_ARTICLE_CONTENT_POST;
+        mPresenter.postArticle(user, title, type, imageUrl, content);
     }
 }

@@ -47,8 +47,9 @@ public class AddArticleModelImpl implements AddArticleModel{
     }
 
     @Override
-    public void postArticle(String title, String type, String imageUrl, String content) {
+    public void postArticle(String user, String title, String type, String imageUrl, String content) {
         Article article = new Article();
+        article.setUser(user);
         article.setTitle(title);
         article.setType(type);
         article.setImageUrl(imageUrl);

@@ -6,5 +6,5 @@ package com.scnu.bangzhu.ganhuocommunity.module.addarticle;
 public interface AddArticleModel {
     void uploadImage(String imageUrl);
 
-    void postArticle(String title, String type, String imageUrl, String content);
+    void postArticle(String user, String title, String type, String imageUrl, String content);
 }
