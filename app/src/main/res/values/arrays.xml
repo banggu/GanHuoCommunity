@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="home_tab_title">
+        <item>PC问题</item>
+        <item>选课相关</item>
+        <item>校内新闻</item>
+        <item>我要吐槽</item>
+    </string-array>
+</resources>

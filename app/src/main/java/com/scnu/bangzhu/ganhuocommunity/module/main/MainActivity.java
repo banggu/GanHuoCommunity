@@ -1,11 +1,10 @@
 package com.scnu.bangzhu.ganhuocommunity.module.main;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +12,7 @@ import android.widget.ImageView;
 import com.scnu.bangzhu.ganhuocommunity.BaseActivity;
 import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.module.addarticle.AddArticleActivity;
+import com.scnu.bangzhu.ganhuocommunity.module.home.HomeFragment;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
     private FloatingActionButton mAddArticle;
@@ -75,7 +75,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private void setFragmentSelect(int index) {
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTrasaction = fm.beginTransaction();
         hideFragment(fragmentTrasaction);
 
