@@ -22,9 +22,7 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     private View mView;
     private ViewPager mViewPager;
-    //private TabLayout mTabLayout;
     private List<Fragment> mFragmentList;
-//    private TabFragmentAdapter mTabFragmentAdapter;
     private FragmentStatePagerAdapter mPagerAdapter;
 
     @Nullable
@@ -37,7 +35,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void initView() {
-        //mTabLayout = (TabLayout) mView.findViewById(R.id.home_tab_tabLayout);
         mViewPager = (ViewPager) mView.findViewById(R.id.home_content_viewPager);
     }
 
@@ -48,7 +45,6 @@ public class HomeFragment extends Fragment {
         mFragmentList.add(new TabFragment());
         mFragmentList.add(new TabFragment());
 
-//        mTabFragmentAdapter = new TabFragmentAdapter(getActivity(), getChildFragmentManager(), mFragmentList);
         mPagerAdapter = new FragmentStatePagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -67,6 +63,5 @@ public class HomeFragment extends Fragment {
             }
         };
         mViewPager.setAdapter(mPagerAdapter);
-        //mTabLayout.setupWithViewPager(mViewPager);
     }
 }

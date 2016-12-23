@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+    <TextView
+        android:id="@+id/hot_article_item_title_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="123"
+        android:textSize="18sp"
+        android:layout_marginBottom="5dp"/>
+    <TextView
+        android:id="@+id/hot_article_item_love_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" love"
+        android:layout_below="@+id/hot_article_item_title_textView"
+        android:drawableLeft="@drawable/ic_love"/>
+    <TextView
+        android:id="@+id/hot_article_item_author_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" 11"
+        android:layout_below="@+id/hot_article_item_title_textView"
+        android:layout_toRightOf="@+id/hot_article_item_love_textView"
+        android:drawableLeft="@drawable/ic_man"
+        android:layout_marginLeft="10dp"/>
+    <TextView
+        android:id="@+id/hot_article_item_time_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" 11"
+        android:layout_below="@+id/hot_article_item_title_textView"
+        android:layout_toRightOf="@+id/hot_article_item_author_textView"
+        android:drawableLeft="@drawable/ic_time"
+        android:layout_marginLeft="10dp"/>
+    <ImageView
+        android:id="@+id/hot_article_item_image_imageView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_alignParentRight="true"/>
+</RelativeLayout>

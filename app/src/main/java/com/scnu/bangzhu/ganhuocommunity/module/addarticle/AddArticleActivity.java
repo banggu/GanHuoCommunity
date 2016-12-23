@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +41,8 @@ import jp.wasabeef.richeditor.RichEditor;
  * Created by chenjianbang on 2016/12/15.
  */
 public class AddArticleActivity extends BaseActivity implements AddArticleView, View.OnClickListener {
-    private EditText mArticleTitle, mArticleType;
+    private EditText mArticleTitle;
+    private Spinner mArticleType;
     private RichEditor mRichEditor;
     private ImageView mInsertImage, mPostArticle;
     private AddArticlePresenter mPresenter;
@@ -56,13 +58,14 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
 
     private void initView() {
         mArticleTitle = (EditText) findViewById(R.id.article_title_editText);
-        mArticleType = (EditText) findViewById(R.id.article_type_editText);
+        mArticleType = (Spinner) findViewById(R.id.article_type_spinner);
         mRichEditor = (RichEditor) findViewById(R.id.rich_editor);
         mInsertImage = (ImageView) findViewById(R.id.insert_image_imageView);
         mPostArticle = (ImageView) findViewById(R.id.post_article_imageView);
 
         mPresenter = new AddArticlePresenterImpl(this);
         mRichEditor.loadCSS("file:///android_asset/rich_editor.css");
+        mRichEditor.setPlaceholder("在这写您的文章");
     }
 
     private void setListeners() {
@@ -77,7 +80,7 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
 
     @Override
     public void setArticleType(String type) {
-        mArticleType.setText(type);
+
     }
 
     @Override
@@ -255,7 +258,7 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String curTime = formatter.format(curDate);
         String title = mArticleTitle.getText().toString();
-        String type = mArticleType.getText().toString();
+        String type = mArticleType.getSelectedItem().toString();
         String image = mRichEditor.getHtml();
         int startIndex = image.indexOf("\"");
         int endIndex = image.indexOf("\"", startIndex+1);
