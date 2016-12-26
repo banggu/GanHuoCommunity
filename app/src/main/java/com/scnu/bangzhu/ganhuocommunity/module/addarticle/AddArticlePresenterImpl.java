@@ -28,8 +28,8 @@ public class AddArticlePresenterImpl implements AddArticlePresenter{
     }
 
     @Override
-    public void postArticle(String user, String title, String type, String imageUrl, String content) {
-        mModel.postArticle(user, title, type, imageUrl, content);
+    public void postArticle(String title, String type, String imageUrl, String content) {
+        mModel.postArticle(title, type, imageUrl, content);
     }
 
     @Override

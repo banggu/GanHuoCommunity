@@ -1,24 +1,17 @@
 package com.scnu.bangzhu.ganhuocommunity.model;
 
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobUser;
 
 /**
  * Created by chenjianbang on 2016/12/15.
  */
 public class Article extends BmobObject{
-    private String user;
     private String title;
     private String type;
     private String imageUrl;
     private String content;
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
+    private BmobUser author;
 
     public String getTitle() {
         return title;
@@ -50,5 +43,13 @@ public class Article extends BmobObject{
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public BmobUser getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(BmobUser author) {
+        this.author = author;
     }
 }

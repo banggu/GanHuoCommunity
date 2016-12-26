@@ -266,6 +266,6 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
         String content = Contants.PAGE_HEADER + Contants.PAGE_ARTICLE_TITLE_PRE + title + Contants.PAGE_ARTICLE_TITLE_POST +
                         Contants.PAGE_ARTICLE_ACCOUNT_PRE + user +" " + curTime + Contants.PAGE_ARTICLE_ACCOUNT_POST +
                         Contants.PAGE_ARTICLE_CONTENT_PRE + image + Contants.PAGE_ARTICLE_CONTENT_POST;
-        mPresenter.postArticle(user, title, type, imageUrl, content);
+        mPresenter.postArticle(title, type, imageUrl, content);
     }
 }

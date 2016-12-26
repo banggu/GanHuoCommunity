@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.scnu.bangzhu.ganhuocommunity.R;
+import com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity.PCCommunityFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ public class HomeFragment extends Fragment {
     private View mView;
     private ViewPager mViewPager;
     private List<Fragment> mFragmentList;
-    private FragmentStatePagerAdapter mPagerAdapter;
+    private FragmentPagerAdapter mPagerAdapter;
 
     @Nullable
     @Override
@@ -40,12 +42,12 @@ public class HomeFragment extends Fragment {
 
     private void bindView() {
         mFragmentList = new ArrayList<>();
-        mFragmentList.add(new TabFragment());
+        mFragmentList.add(new PCCommunityFragment());
         mFragmentList.add(new TabFragment());
         mFragmentList.add(new TabFragment());
         mFragmentList.add(new TabFragment());
 
-        mPagerAdapter = new FragmentStatePagerAdapter(getChildFragmentManager()) {
+        mPagerAdapter = new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 return mFragmentList.get(position);

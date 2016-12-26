@@ -6,6 +6,8 @@ import com.scnu.bangzhu.ganhuocommunity.model.Article;
 
 import java.io.File;
 
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -47,13 +49,14 @@ public class AddArticleModelImpl implements AddArticleModel{
     }
 
     @Override
-    public void postArticle(String user, String title, String type, String imageUrl, String content) {
+    public void postArticle(String title, String type, String imageUrl, String content) {
+        BmobUser author = BmobUser.getCurrentUser(BmobUser.class);
         Article article = new Article();
-        article.setUser(user);
         article.setTitle(title);
         article.setType(type);
         article.setImageUrl(imageUrl);
         article.setContent(content);
+        article.setAuthor(author);
         article.save(new SaveListener<String>() {
 
             @Override
