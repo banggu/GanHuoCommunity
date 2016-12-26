@@ -1,16 +1,20 @@
 package com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
+import com.scnu.bangzhu.ganhuocommunity.module.main.ArticleDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +36,7 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
         mView = inflater.inflate(R.layout.fragment_home_pccommunity, container, false);
         initView();
         bindView();
+        setListener();
         return mView;
     }
 
@@ -47,6 +52,23 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
     private void bindView() {
         mArticleListView.setAdapter(mArticleListAdapter);
         mPresenter.loadArticleList();
+    }
+
+    private void setListener() {
+        mArticleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Article article = mArticleList.get(i);
+                Log.i("hzwing", article.getContent());
+                gotoArticleDetails(article.getContent());
+            }
+        });
+    }
+
+    private void gotoArticleDetails(String articleContent) {
+        Intent intent = new Intent(getActivity(), ArticleDetailsActivity.class);
+        intent.putExtra("articleContent", articleContent);
+        startActivity(intent);
     }
 
     @Override

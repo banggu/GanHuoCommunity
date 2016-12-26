@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:divider="@drawable/divider"
+    android:showDividers="end">
+    <WebView
+        android:id="@+id/article_details_webView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <ImageView
+            android:id="@+id/love_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_love_unfollowl"/>
+        <ImageView
+            android:id="@+id/comment_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_comment"
+            android:layout_toRightOf="@+id/love_imageView"
+            android:layout_marginLeft="15dp"/>
+        <ImageView
+            android:id="@+id/share_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_share"
+            android:layout_toRightOf="@+id/comment_imageView"
+            android:layout_marginLeft="15dp"/>
+        <TextView
+            android:id="@+id/collect_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="收藏40"
+            android:textSize="14sp"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+</LinearLayout>
