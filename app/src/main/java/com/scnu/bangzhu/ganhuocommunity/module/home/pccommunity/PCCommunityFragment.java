@@ -83,6 +83,7 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
 
     @Override
     public void refreshArticleList(List<Article> list) {
+        mArticleList.clear();
         mArticleList.addAll(list);
         mArticleListAdapter.notifyDataSetChanged();
         mSwipeRefreshLayout.setRefreshing(false);
@@ -96,6 +97,6 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
     @Override
     public void onRefresh() {
         mPresenter.loadArticleList();
-
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 }

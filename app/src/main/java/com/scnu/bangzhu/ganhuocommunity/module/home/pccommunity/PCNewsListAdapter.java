@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -58,13 +57,16 @@ public class PCNewsListAdapter extends BaseAdapter{
         }
 
         Article article = mArticleList.get(position);
-        Picasso.with(mContext)
-                .load(article.getImageUrl())
-                .resize(60, 60)
+        String url = article.getImageUrl();
+        String imageUrl = url.substring(1, url.length()-1);
+        Glide.with(mContext)
+                .load(imageUrl)
                 .centerCrop()
+                .placeholder(R.mipmap.ic_launcher)
+                .crossFade()
                 .into(viewHolder.articleImage);
         viewHolder.articleTitle.setText(article.getTitle());
-        String tip = "0人收藏·" + article.getAuthor().getUsername() + "·" + article.getAuthor().getCreatedAt();
+        String tip = "0人收藏·" + article.getAuthor().getUsername() + "·" + article.getCreatedAt();
         viewHolder.articleTip.setText(tip);
         return convertView;
     }
