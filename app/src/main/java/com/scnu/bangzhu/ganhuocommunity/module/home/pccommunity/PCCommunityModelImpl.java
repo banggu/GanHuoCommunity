@@ -28,6 +28,9 @@ public class PCCommunityModelImpl implements PCCommunityModel{
 
     @Override
     public void loadArticleList() {
+
+
+
         BmobQuery<Article> query = new BmobQuery<Article>();
         query.addWhereEqualTo("type", "计算机");
         //执行查询方法
@@ -46,5 +49,7 @@ public class PCCommunityModelImpl implements PCCommunityModel{
                 }
             }
         });
+
+
     }
 }
