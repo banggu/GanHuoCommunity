@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
@@ -28,17 +29,18 @@ public class PCCommunityModelImpl implements PCCommunityModel{
 
     @Override
     public void loadArticleList() {
-
-
-
         BmobQuery<Article> query = new BmobQuery<Article>();
-        query.addWhereEqualTo("type", "计算机");
+        BmobQuery<BmobUser> innerQuery = new BmobQuery<BmobUser>();
+        innerQuery.addWhereExists("username");
+        //query.addWhereEqualTo("type", "计算机");
         //执行查询方法
+        query.addWhereEqualTo("type", "计算机");
         query.include("author");
+        query.addWhereMatchesQuery("author", "_User", innerQuery);
         query.findObjects(new FindListener<Article>() {
             @Override
             public void done(List<Article> object, BmobException e) {
-                if(e==null){
+                if(e == null){
                     for (Article article : object) {
                         Log.i("HZWING", article.getAuthor().getUsername()+"\n"+article.getCreatedAt()+"\n"+article.getImageUrl());
                     }
