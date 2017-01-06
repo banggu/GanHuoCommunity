@@ -10,13 +10,13 @@ import java.util.List;
 public interface PCCommunityPresenter {
     void loadHotArticleList();
 
-    void loadHotArticleListSuccess();
+    void loadHotArticleListSuccess(List<Article> list);
 
     void loadHotArticleListFailtrue();
 
-    void loadArticleList();
+    void loadArticleList(final int page, final int limit, final int actionType);
 
-    void loadArticleListSuccess(List<Article> list);
+    void loadArticleListSuccess(int curPage, List<Article> list);
 
     void loadArticleListFailtrue();
 }

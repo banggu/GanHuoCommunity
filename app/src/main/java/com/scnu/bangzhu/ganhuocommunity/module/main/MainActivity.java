@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.scnu.bangzhu.ganhuocommunity.BaseActivity;
 import com.scnu.bangzhu.ganhuocommunity.R;
@@ -21,6 +23,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private HotNewsFragment mHotNewsFragment;
     private MeFragment mMeFragememt;
     private MessageFragment mMsgFragment;
+    private long mExitTime;
+    private int mCurPage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +32,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         setContentView(R.layout.activity_main);
         initView();
         setListener();
-        setFragmentSelect(0);
+        setFragmentSelect(mCurPage);
     }
 
     private void initView() {
@@ -69,6 +73,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
        }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            if(mCurPage == 0) {
+                if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                    Toast.makeText(getApplicationContext(), "再按一次退出程序",
+                            Toast.LENGTH_SHORT).show();
+                    mExitTime = System.currentTimeMillis();
+                } else {
+                    System.exit(0);
+                }
+            } else {
+                resetIcons();
+                setFragmentSelect(0);
+            }
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     private void gotoAddArticle() {
         Intent intent = new Intent(this, AddArticleActivity.class);
         startActivity(intent);
@@ -78,6 +102,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTrasaction = fm.beginTransaction();
         hideFragment(fragmentTrasaction);
+        mCurPage = index;
 
         switch(index) {
             case 0 :

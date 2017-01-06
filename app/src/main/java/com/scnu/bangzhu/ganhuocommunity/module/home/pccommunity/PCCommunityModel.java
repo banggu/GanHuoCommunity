@@ -10,5 +10,5 @@ import java.util.List;
 public interface PCCommunityModel {
     void loadHotArticleList();
 
-    void loadArticleList();
+    void loadArticleList(final int page, final int limit, final int actionType);
 }

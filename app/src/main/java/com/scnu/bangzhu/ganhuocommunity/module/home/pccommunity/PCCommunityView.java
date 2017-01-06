@@ -12,7 +12,7 @@ public interface PCCommunityView {
 
     void showNetworkError();
 
-    void refreshArticleList(List<Article> list);
+    void refreshArticleList(int curPage, List<Article> list);
 
     void refreshHotArticleList(List<Article> list);
 }

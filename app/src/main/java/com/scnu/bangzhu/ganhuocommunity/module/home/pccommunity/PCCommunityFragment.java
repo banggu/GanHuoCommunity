@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.scnu.bangzhu.ganhuocommunity.R;
@@ -31,12 +34,22 @@ import cn.bmob.v3.listener.UpdateListener;
  * Created by chenjianbang on 2016/12/26.
  */
 public class PCCommunityFragment extends Fragment implements PCCommunityView, SwipeRefreshLayout.OnRefreshListener{
+    //下拉刷新与加载相关变量
+    public static final int STATE_REFRESH = 0;
+    public static final int STATE_MORE = 1;
+    private int mLimit = 10;
+    private int mCurPage = 0;
+    private int mLastVisibleItemPosition = 0;
+    //视图相关
     private View mView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ListView mArticleListView;
     private List<Article> mArticleList;
     private PCNewsListAdapter mArticleListAdapter;
     private PCCommunityPresenter mPresenter;
+    private ListView mHotArticleListView;
+    private List<Article> mHotArticleList;
+    private PCHotArticleListAdapter mHotArticleListAdapter;
 
     @Nullable
     @Override
@@ -59,7 +72,22 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
 
     private void bindView() {
         mArticleListView.setAdapter(mArticleListAdapter);
-        mPresenter.loadArticleList();
+        mPresenter.loadArticleList(mCurPage, mLimit, STATE_REFRESH);
+        bindListViewHeader();
+        mPresenter.loadHotArticleList();
+    }
+
+    private void bindListViewHeader() {
+        ViewGroup header = (ViewGroup) getActivity().getLayoutInflater().inflate(R.layout.layout_listview_header, mArticleListView, false);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.listview_header_height));
+        header.setLayoutParams(params);
+
+        mHotArticleListView = (ListView) header.findViewById(R.id.hotarticlelist_listview);
+        mHotArticleList = new ArrayList<>();
+        mHotArticleListAdapter = new PCHotArticleListAdapter(getActivity(), mHotArticleList);
+        mHotArticleListView.setAdapter(mHotArticleListAdapter);
+
+        mArticleListView.addHeaderView(header, null, false);
     }
 
     private void setListener() {
@@ -72,8 +100,31 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
                 gotoArticleDetails(article.getContent());
             }
         });
+        mArticleListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                //滑动到最后一行
+                if(firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
+                    //向上滑动
+                    if(firstVisibleItem > mLastVisibleItemPosition) {
+                        mPresenter.loadArticleList(mCurPage, mLimit, STATE_MORE);
+                    }
+                }
+                if (firstVisibleItem < mLastVisibleItemPosition) {
+                  //向下滑动
+                }
+                mLastVisibleItemPosition = firstVisibleItem;
+            }
+        });
+        mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
+    /////////////////////
     private void bindRelation(Article a) {
         BmobUser user = BmobUser.getCurrentUser();
         final Article article = new Article();
@@ -102,7 +153,7 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
         BmobQuery<BmobUser> query = new BmobQuery<BmobUser>();
         final Article article = new Article();
         article.setObjectId(a.getObjectId());
-//likes是Post表中的字段，用来存储所有喜欢该帖子的用户
+        //likes是Post表中的字段，用来存储所有喜欢该帖子的用户
         query.addWhereRelatedTo("likes", new BmobPointer(article));
         query.findObjects(new FindListener<BmobUser>() {
 
@@ -129,6 +180,7 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
             }
         });
     }
+    //////////////
 
     private void gotoArticleDetails(String articleContent) {
         Intent intent = new Intent(getActivity(), ArticleDetailsActivity.class);
@@ -147,7 +199,8 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
     }
 
     @Override
-    public void refreshArticleList(List<Article> list) {
+    public void refreshArticleList(int curPage, List<Article> list) {
+        mCurPage = curPage;
         mArticleList.clear();
         mArticleList.addAll(list);
         mArticleListAdapter.notifyDataSetChanged();
@@ -156,12 +209,15 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
 
     @Override
     public void refreshHotArticleList(List<Article> list) {
-
+        mHotArticleList.clear();
+        mHotArticleList.addAll(list);
+        mHotArticleListAdapter.notifyDataSetChanged();
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.loadArticleList();
-        mSwipeRefreshLayout.setRefreshing(false);
+        mPresenter.loadArticleList(mCurPage, mLimit, STATE_REFRESH);
+        mPresenter.loadHotArticleList();
     }
 }

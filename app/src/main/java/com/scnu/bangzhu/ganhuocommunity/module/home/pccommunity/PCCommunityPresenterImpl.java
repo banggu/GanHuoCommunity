@@ -22,8 +22,8 @@ public class PCCommunityPresenterImpl implements PCCommunityPresenter{
     }
 
     @Override
-    public void loadHotArticleListSuccess() {
-
+    public void loadHotArticleListSuccess(List<Article> list) {
+        mView.refreshHotArticleList(list);
     }
 
     @Override
@@ -32,13 +32,13 @@ public class PCCommunityPresenterImpl implements PCCommunityPresenter{
     }
 
     @Override
-    public void loadArticleList() {
-        mModel.loadArticleList();
+    public void loadArticleList(final int page, final int limit, final int actionType) {
+        mModel.loadArticleList(page, limit, actionType);
     }
 
     @Override
-    public void loadArticleListSuccess(List<Article> list) {
-        mView.refreshArticleList(list);
+    public void loadArticleListSuccess(int curPage, List<Article> list) {
+        mView.refreshArticleList(curPage, list);
     }
 
     @Override
