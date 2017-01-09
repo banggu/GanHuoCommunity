@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.scnu.bangzhu.ganhuocommunity.R;
+import com.scnu.bangzhu.ganhuocommunity.module.home.coursecommunity.CourseCommunityFragment;
 import com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity.PCCommunityFragment;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class HomeFragment extends Fragment {
     private void bindView() {
         mFragmentList = new ArrayList<>();
         mFragmentList.add(new PCCommunityFragment());
-        mFragmentList.add(new TabFragment());
+        mFragmentList.add(new CourseCommunityFragment());
         mFragmentList.add(new TabFragment());
         mFragmentList.add(new TabFragment());
 

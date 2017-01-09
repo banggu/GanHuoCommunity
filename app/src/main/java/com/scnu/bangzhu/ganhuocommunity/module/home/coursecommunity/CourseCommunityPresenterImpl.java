@@ -1,19 +1,19 @@
-package com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity;
+package com.scnu.bangzhu.ganhuocommunity.module.home.coursecommunity;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
 
 import java.util.List;
 
 /**
- * Created by chenjianbang on 2016/12/26.
+ * Created by chenjianbang on 2017/1/9.
  */
-public class PCCommunityPresenterImpl implements PCCommunityPresenter{
-    private PCCommunityView mView;
-    private PCCommunityModel mModel;
+public class CourseCommunityPresenterImpl implements CourseCommunityPresenter {
+    private CourseCommunityModel mModel;
+    private CourseCommunityView mView;
 
-    public PCCommunityPresenterImpl(PCCommunityView view) {
+    public CourseCommunityPresenterImpl(CourseCommunityView view) {
         mView = view;
-        mModel = new PCCommunityModelImpl(this);
+        mModel = new CourseCommunityModelImpl(this);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class PCCommunityPresenterImpl implements PCCommunityPresenter{
     }
 
     @Override
-    public void loadArticleList(final int page, final int limit, final int actionType) {
+    public void loadArticleList(int page, int limit, int actionType) {
         mModel.loadArticleList(page, limit, actionType);
     }
 

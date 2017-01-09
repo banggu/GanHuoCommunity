@@ -1,4 +1,4 @@
-package com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity;
+package com.scnu.bangzhu.ganhuocommunity.module.home;
 
 import android.content.Context;
 import android.util.Log;
@@ -18,11 +18,11 @@ import java.util.List;
 /**
  * Created by chenjianbang on 2016/12/26.
  */
-public class PCNewsListAdapter extends BaseAdapter{
+public class ArticleListAdapter extends BaseAdapter{
     private List<Article> mArticleList;
     private Context mContext;
 
-    public PCNewsListAdapter(Context context, List<Article> list) {
+    public ArticleListAdapter(Context context, List<Article> list) {
         mContext = context;
         mArticleList = list;
     }
@@ -66,7 +66,7 @@ public class PCNewsListAdapter extends BaseAdapter{
                 .crossFade()
                 .into(viewHolder.articleImage);
         viewHolder.articleTitle.setText(article.getTitle());
-        String tip = "0人收藏·" + article.getAuthor().getUsername() + "·" + article.getCreatedAt();
+        String tip = article.getLikesCount() + "人收藏· " + article.getAuthor().getUsername() + "· " + article.getCreatedAt();
         viewHolder.articleTip.setText(tip);
         return convertView;
     }

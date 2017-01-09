@@ -1,4 +1,4 @@
-package com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity;
+package com.scnu.bangzhu.ganhuocommunity.module.home.coursecommunity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,8 @@ import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
 import com.scnu.bangzhu.ganhuocommunity.module.home.ArticleListAdapter;
 import com.scnu.bangzhu.ganhuocommunity.module.home.HotArticleListAdapter;
+import com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity.PCCommunityPresenter;
+import com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity.PCCommunityPresenterImpl;
 import com.scnu.bangzhu.ganhuocommunity.module.main.ArticleDetailsActivity;
 
 import java.util.ArrayList;
@@ -32,9 +34,9 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * Created by chenjianbang on 2016/12/26.
+ * Created by chenjianbang on 2017/1/9.
  */
-public class PCCommunityFragment extends Fragment implements PCCommunityView, SwipeRefreshLayout.OnRefreshListener {
+public class CourseCommunityFragment extends Fragment implements CourseCommunityView, SwipeRefreshLayout.OnRefreshListener {
     //下拉刷新与加载相关变量
     public static final int STATE_REFRESH = 0;
     public static final int STATE_MORE = 1;
@@ -47,7 +49,7 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
     private ListView mArticleListView;
     private List<Article> mArticleList;
     private ArticleListAdapter mArticleListAdapter;
-    private PCCommunityPresenter mPresenter;
+    private CourseCommunityPresenter mPresenter;
     private ListView mHotArticleListView;
     private List<Article> mHotArticleList;
     private HotArticleListAdapter mHotArticleListAdapter;
@@ -70,7 +72,7 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
 
         mArticleList = new ArrayList<>();
         mArticleListAdapter = new ArticleListAdapter(getActivity(), mArticleList);
-        mPresenter = new PCCommunityPresenterImpl(this);
+        mPresenter = new CourseCommunityPresenterImpl(this);
     }
 
     private void bindView() {
@@ -133,7 +135,7 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
                     }
                 }
                 if (firstVisibleItem < mLastVisibleItemPosition) {
-                  //向下滑动
+                    //向下滑动
                 }
                 mLastVisibleItemPosition = firstVisibleItem;
             }
@@ -203,11 +205,6 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
         Intent intent = new Intent(getActivity(), ArticleDetailsActivity.class);
         intent.putExtra("articleContent", articleContent);
         startActivity(intent);
-    }
-
-    @Override
-    public void showDataLoading() {
-
     }
 
     @Override

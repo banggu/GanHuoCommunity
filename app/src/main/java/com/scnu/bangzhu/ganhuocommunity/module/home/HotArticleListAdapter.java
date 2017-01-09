@@ -1,4 +1,4 @@
-package com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity;
+package com.scnu.bangzhu.ganhuocommunity.module.home;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,11 +17,11 @@ import java.util.List;
 /**
  * Created by chenjianbang on 2017/1/6.
  */
-public class PCHotArticleListAdapter extends BaseAdapter {
+public class HotArticleListAdapter extends BaseAdapter {
     private Context mContext;
     private List<Article> mHotArticleList;
 
-    public PCHotArticleListAdapter(Context context, List<Article> list) {
+    public HotArticleListAdapter(Context context, List<Article> list) {
         mContext = context;
         mHotArticleList = list;
     }
@@ -60,9 +60,9 @@ public class PCHotArticleListAdapter extends BaseAdapter {
 
         Article article = mHotArticleList.get(position);
         viewHolder.hotArticleTitle.setText(article.getTitle());
-        viewHolder.hotArticleLove.setText("0");
-        viewHolder.hotArticleAuthor.setText(article.getAuthor().getUsername());
-        viewHolder.hotArticleTime.setText(article.getCreatedAt());
+        viewHolder.hotArticleLove.setText(" " + article.getLikesCount()+"");
+        viewHolder.hotArticleAuthor.setText(" " + article.getAuthor().getUsername());
+        viewHolder.hotArticleTime.setText(" " + article.getCreatedAt());
 
         String url = article.getImageUrl();
         String imageUrl = url.substring(1, url.length()-1);

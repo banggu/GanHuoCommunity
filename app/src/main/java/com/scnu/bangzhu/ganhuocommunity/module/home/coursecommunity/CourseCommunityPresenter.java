@@ -1,13 +1,14 @@
-package com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity;
+package com.scnu.bangzhu.ganhuocommunity.module.home.coursecommunity;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
 
 import java.util.List;
 
 /**
- * Created by chenjianbang on 2016/12/26.
+ * Created by chenjianbang on 2017/1/9.
  */
-public interface PCCommunityPresenter {
+public interface CourseCommunityPresenter {
+
     void loadHotArticleList();
 
     void loadHotArticleListSuccess(List<Article> list);
@@ -19,4 +20,5 @@ public interface PCCommunityPresenter {
     void loadArticleListSuccess(int curPage, int actionType, List<Article> list);
 
     void loadArticleListFailtrue();
+
 }
