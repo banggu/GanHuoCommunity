@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.module.home.coursecommunity.CourseCommunityFragment;
 import com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity.PCCommunityFragment;
+import com.scnu.bangzhu.ganhuocommunity.module.home.schoolnewscommunity.SchoolNewsCommunityFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class HomeFragment extends Fragment {
         mFragmentList = new ArrayList<>();
         mFragmentList.add(new PCCommunityFragment());
         mFragmentList.add(new CourseCommunityFragment());
-        mFragmentList.add(new TabFragment());
+        mFragmentList.add(new SchoolNewsCommunityFragment());
         mFragmentList.add(new TabFragment());
 
         mPagerAdapter = new FragmentPagerAdapter(getChildFragmentManager()) {
