@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -47,6 +48,7 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
     private ImageView mInsertImage, mPostArticle;
     private AddArticlePresenter mPresenter;
     private Uri mImageUri;
+    private int mSelectPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,17 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
     private void setListeners() {
         mInsertImage.setOnClickListener(this);
         mPostArticle.setOnClickListener(this);
+        mArticleType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                mSelectPos = i;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     @Override
@@ -260,9 +273,15 @@ public class AddArticleActivity extends BaseActivity implements AddArticleView, 
         String title = mArticleTitle.getText().toString();
         String type = mArticleType.getSelectedItem().toString();
         String image = mRichEditor.getHtml();
+        String imageUrl;
         int startIndex = image.indexOf("\"");
         int endIndex = image.indexOf("\"", startIndex+1);
-        String imageUrl = image.substring(startIndex, endIndex+1);
+        if(startIndex == -1 || endIndex == -1) {
+            imageUrl = "";
+        } else {
+            imageUrl = image.substring(startIndex, endIndex+1);
+        }
+
         String content = Contants.PAGE_HEADER + Contants.PAGE_ARTICLE_TITLE_PRE + title + Contants.PAGE_ARTICLE_TITLE_POST +
                         Contants.PAGE_ARTICLE_ACCOUNT_PRE + user +" " + curTime + Contants.PAGE_ARTICLE_ACCOUNT_POST +
                         Contants.PAGE_ARTICLE_CONTENT_PRE + image + Contants.PAGE_ARTICLE_CONTENT_POST;

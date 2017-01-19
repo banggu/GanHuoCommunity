@@ -24,6 +24,22 @@ public class CourseCommunityModelImpl implements CourseCommunityModel {
     }
 
     @Override
+    public void queryTotalPageNum(final int limit) {
+        BmobQuery<Article> query = new BmobQuery<>();
+        StringBuffer sql = new StringBuffer();
+        sql.append("select include author,* from Article where type = " + "'" + "选课相关" + "'");
+        query.doSQLQuery(sql.toString(), new SQLQueryListener<Article>() {
+            @Override
+            public void done(BmobQueryResult<Article> result, BmobException e) {
+                List<Article> list = (List<Article>) result.getResults();
+                int count  = list.size();
+                int pageNum = count/limit + 1;
+                mPresenter.queryPageNumSuccess(pageNum);
+            }
+        });
+    }
+
+    @Override
     public void loadHotArticleList() {
         BmobQuery<Article> query = new BmobQuery<>();
         String sql = "select include author,* from Article where type = " + "'" + "选课相关" + "'" + " order by " +"likesCount " + "desc";

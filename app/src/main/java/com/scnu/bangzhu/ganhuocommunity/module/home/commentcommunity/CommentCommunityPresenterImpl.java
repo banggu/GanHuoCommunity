@@ -1,4 +1,4 @@
-package com.scnu.bangzhu.ganhuocommunity.module.home.schoolnewscommunity;
+package com.scnu.bangzhu.ganhuocommunity.module.home.commentcommunity;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
 
@@ -7,13 +7,13 @@ import java.util.List;
 /**
  * Created by chenjianbang on 2016/12/26.
  */
-public class SchoolNewsCommunityPresenterImpl implements SchoolNewsCommunityPresenter {
-    private SchoolNewsCommunityView mView;
-    private SchoolNewsCommunityModel mModel;
+public class CommentCommunityPresenterImpl implements CommentCommunityPresenter {
+    private CommentCommunityView mView;
+    private CommentCommunityModel mModel;
 
-    public SchoolNewsCommunityPresenterImpl(SchoolNewsCommunityView view) {
+    public CommentCommunityPresenterImpl(CommentCommunityView view) {
         mView = view;
-        mModel = new SchoolNewsCommunityModelImpl(this);
+        mModel = new CommentCommunityModelImpl(this);
     }
 
     @Override
@@ -28,21 +28,6 @@ public class SchoolNewsCommunityPresenterImpl implements SchoolNewsCommunityPres
 
     @Override
     public void queryPageNumFailtrue() {
-
-    }
-
-    @Override
-    public void loadHotArticleList() {
-        mModel.loadHotArticleList();
-    }
-
-    @Override
-    public void loadHotArticleListSuccess(List<Article> list) {
-        mView.refreshHotArticleList(list);
-    }
-
-    @Override
-    public void loadHotArticleListFailtrue() {
 
     }
 

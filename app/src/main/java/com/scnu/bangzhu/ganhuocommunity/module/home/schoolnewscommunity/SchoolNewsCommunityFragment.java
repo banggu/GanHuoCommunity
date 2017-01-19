@@ -38,6 +38,7 @@ public class SchoolNewsCommunityFragment extends Fragment implements SchoolNewsC
     //下拉刷新与加载相关变量
     public static final int STATE_REFRESH = 0;
     public static final int STATE_MORE = 1;
+    private int mPageNum = 0;
     private int mLimit = 10;
     private int mCurPage = 1;
     private int mLastVisibleItemPosition = 0;
@@ -75,6 +76,7 @@ public class SchoolNewsCommunityFragment extends Fragment implements SchoolNewsC
 
     private void bindView() {
         mArticleListView.setAdapter(mArticleListAdapter);
+        mPresenter.queryTotalPageNum(mLimit);
         mPresenter.loadArticleList(mCurPage, mLimit, STATE_REFRESH);
         bindListViewHeader();
         mPresenter.loadHotArticleList();
@@ -129,7 +131,11 @@ public class SchoolNewsCommunityFragment extends Fragment implements SchoolNewsC
                     //向上滑动
                     if(firstVisibleItem > mLastVisibleItemPosition) {
                         mLoadingData.setVisibility(View.VISIBLE);
-                        mPresenter.loadArticleList(mCurPage, mLimit, STATE_MORE);
+                        if(mCurPage < mPageNum) {
+                            mPresenter.loadArticleList(mCurPage, mLimit, STATE_MORE);
+                        } else {
+                            mLoadingData.setVisibility(View.GONE);
+                        }
                     }
                 }
                 if (firstVisibleItem < mLastVisibleItemPosition) {
@@ -213,6 +219,11 @@ public class SchoolNewsCommunityFragment extends Fragment implements SchoolNewsC
     @Override
     public void showNetworkError() {
 
+    }
+
+    @Override
+    public void setPageNum(int pageNum) {
+        mPageNum = pageNum;
     }
 
     @Override

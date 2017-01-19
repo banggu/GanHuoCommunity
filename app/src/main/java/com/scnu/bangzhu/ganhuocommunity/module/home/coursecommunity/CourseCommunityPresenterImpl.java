@@ -17,6 +17,21 @@ public class CourseCommunityPresenterImpl implements CourseCommunityPresenter {
     }
 
     @Override
+    public void queryTotalPageNum(int limit) {
+        mModel.queryTotalPageNum(limit);
+    }
+
+    @Override
+    public void queryPageNumSuccess(int pageNum) {
+        mView.setPageNum(pageNum);
+    }
+
+    @Override
+    public void queryPageNumFailtrue() {
+
+    }
+
+    @Override
     public void loadHotArticleList() {
         mModel.loadHotArticleList();
     }

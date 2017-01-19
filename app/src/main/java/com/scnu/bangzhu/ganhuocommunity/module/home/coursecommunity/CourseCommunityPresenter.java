@@ -8,6 +8,11 @@ import java.util.List;
  * Created by chenjianbang on 2017/1/9.
  */
 public interface CourseCommunityPresenter {
+    void queryTotalPageNum(int limit);
+
+    void queryPageNumSuccess(int pageNum);
+
+    void queryPageNumFailtrue();
 
     void loadHotArticleList();
 

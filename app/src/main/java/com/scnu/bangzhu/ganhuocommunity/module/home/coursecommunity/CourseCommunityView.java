@@ -11,6 +11,8 @@ public interface CourseCommunityView {
 
     void showNetworkError();
 
+    void setPageNum(int pageNum);
+
     void refreshArticleList(int curPage, int actionType, List<Article> list);
 
     void refreshHotArticleList(List<Article> list);
