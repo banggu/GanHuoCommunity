@@ -1,8 +1,10 @@
 package com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity;
 
+import android.os.Message;
 import android.util.Log;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
+import com.scnu.bangzhu.ganhuocommunity.module.main.MessageFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +30,7 @@ import cn.bmob.v3.listener.SQLQueryListener;
  */
 public class PCCommunityModelImpl implements PCCommunityModel{
     private PCCommunityPresenter mPresenter;
+    private int mPageNum;
 
     public PCCommunityModelImpl(PCCommunityPresenter presenter) {
         mPresenter = presenter;
@@ -43,8 +46,12 @@ public class PCCommunityModelImpl implements PCCommunityModel{
             public void done(BmobQueryResult<Article> result, BmobException e) {
                 List<Article> list = (List<Article>) result.getResults();
                 int count  = list.size();
-                int pageNum = count/limit + 1;
-                mPresenter.queryPageNumSuccess(pageNum);
+                if(count%limit == 0) {
+                    mPageNum = count/limit;
+                } else {
+                    mPageNum = count/limit + 1;
+                }
+                mPresenter.queryPageNumSuccess(mPageNum);
             }
         });
     }
@@ -80,7 +87,10 @@ public class PCCommunityModelImpl implements PCCommunityModel{
     }
 
     @Override
-    public void loadArticleList(final int page, final int limit, final int actionType) {
+    public void loadArticleList(final int page, final int limit, final int actionType, final PCCommunityFragment.StaticHandler handler) {
+        if(page > mPageNum) {
+            return;
+        }
         BmobQuery<Article> query = new BmobQuery<>();
         query.order("-createdAt");
         StringBuffer sql = new StringBuffer();
@@ -96,18 +106,19 @@ public class PCCommunityModelImpl implements PCCommunityModel{
 
 			@Override
 			public void done(BmobQueryResult<Article> result, BmobException e) {
-				if(e ==null){
+				if(e == null){
 					List<Article> list = (List<Article>) result.getResults();
 					if(list!=null && list.size()>0){
-                        for (Article article : list) {
-                            Log.i("HZWING", article.getAuthor().getUsername()+"\n"+article.getCreatedAt()+"\n"+article.getImageUrl());
-                        }
                         int curPage = page;
                         if(actionType == PCCommunityFragment.STATE_REFRESH) {
                             curPage = 1;
                         } else {
                             curPage++;
                         }
+                        Message msg = new Message();
+                        msg.what = 12581;
+                        msg.arg1 = curPage;
+                        //handler.sendMessage(msg);
                         mPresenter.loadArticleListSuccess(curPage, actionType, list);
 					}else{
 						Log.i("HZWING", "查询成功，无数据返回");

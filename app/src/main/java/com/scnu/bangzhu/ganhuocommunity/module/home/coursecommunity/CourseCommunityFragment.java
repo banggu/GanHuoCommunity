@@ -104,7 +104,7 @@ public class CourseCommunityFragment extends Fragment implements CourseCommunity
                 Article article = mArticleList.get(i-1);
                 if(article != null) {
                     bindRelation(article);
-                    gotoArticleDetails(article.getContent());
+                    gotoArticleDetails(article);
                 }
             }
         });
@@ -115,7 +115,7 @@ public class CourseCommunityFragment extends Fragment implements CourseCommunity
                 Article article = mHotArticleList.get(i);
                 if(article != null) {
                     bindRelation(article);
-                    gotoArticleDetails(article.getContent());
+                    gotoArticleDetails(article);
                 }
             }
         });
@@ -207,9 +207,9 @@ public class CourseCommunityFragment extends Fragment implements CourseCommunity
     }
     //////////////
 
-    private void gotoArticleDetails(String articleContent) {
+    private void gotoArticleDetails(Article article) {
         Intent intent = new Intent(getActivity(), ArticleDetailsActivity.class);
-        intent.putExtra("articleContent", articleContent);
+        intent.putExtra("article", article);
         startActivity(intent);
     }
 

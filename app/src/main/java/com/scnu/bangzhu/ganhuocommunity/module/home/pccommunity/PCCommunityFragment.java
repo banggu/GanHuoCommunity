@@ -2,6 +2,8 @@ package com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -19,7 +21,9 @@ import com.scnu.bangzhu.ganhuocommunity.model.Article;
 import com.scnu.bangzhu.ganhuocommunity.module.home.ArticleListAdapter;
 import com.scnu.bangzhu.ganhuocommunity.module.home.HotArticleListAdapter;
 import com.scnu.bangzhu.ganhuocommunity.module.main.ArticleDetailsActivity;
+import com.scnu.bangzhu.ganhuocommunity.module.main.MyFragmentPagerAdapter;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +57,7 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
     private List<Article> mHotArticleList;
     private HotArticleListAdapter mHotArticleListAdapter;
     private LinearLayout mLoadingData;
+    private StaticHandler mHandler = new StaticHandler(this);
 
     @Nullable
     @Override
@@ -77,7 +82,7 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
     private void bindView() {
         mArticleListView.setAdapter(mArticleListAdapter);
         mPresenter.queryTotalPageNum(mLimit);
-        mPresenter.loadArticleList(mCurPage, mLimit, STATE_REFRESH);
+        mPresenter.loadArticleList(mCurPage, mLimit, STATE_REFRESH, mHandler);
         bindListViewHeader();
         mPresenter.loadHotArticleList();
     }
@@ -101,7 +106,7 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Article article = mArticleList.get(i-1);
                 if(article != null) {
-                    gotoArticleDetails(article.getContent());
+                    gotoArticleDetails(article);
                 }
             }
         });
@@ -111,7 +116,7 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Article article = mHotArticleList.get(i);
                 if(article != null) {
-                    gotoArticleDetails(article.getContent());
+                    gotoArticleDetails(article);
                 }
             }
         });
@@ -130,7 +135,7 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
                     if(firstVisibleItem > mLastVisibleItemPosition) {
                         mLoadingData.setVisibility(View.VISIBLE);
                         if(mCurPage < mPageNum) {
-                            mPresenter.loadArticleList(mCurPage, mLimit, STATE_MORE);
+                            mPresenter.loadArticleList(mCurPage, mLimit, STATE_MORE, mHandler);
                         } else {//若为最后一页，则不加载数据
                             mLoadingData.setVisibility(View.GONE);
                         }
@@ -145,9 +150,9 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
-    private void gotoArticleDetails(String articleContent) {
+    private void gotoArticleDetails(Article article) {
         Intent intent = new Intent(getActivity(), ArticleDetailsActivity.class);
-        intent.putExtra("articleContent", articleContent);
+        intent.putExtra("article", article);
         startActivity(intent);
     }
 
@@ -167,9 +172,14 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
     }
 
     @Override
-    public void refreshArticleList(int curPage, int actionType, List<Article> list) {
-        mLoadingData.setVisibility(View.GONE);
+    public void setCurPage(int curPage) {
         mCurPage = curPage;
+    }
+
+    @Override
+    public void refreshArticleList(int actionType, List<Article> list) {
+        mLoadingData.setVisibility(View.GONE);
+        Log.i("smileing", mCurPage+"---->" + mPageNum);
         if(actionType == STATE_REFRESH) {
             mArticleList.clear();
         }
@@ -188,8 +198,28 @@ public class PCCommunityFragment extends Fragment implements PCCommunityView, Sw
 
     @Override
     public void onRefresh() {
-        mPresenter.loadArticleList(mCurPage, mLimit, STATE_REFRESH);
+        mPresenter.loadArticleList(mCurPage, mLimit, STATE_REFRESH, mHandler);
         mPresenter.loadHotArticleList();
     }
 
+    static class StaticHandler extends Handler {
+        private WeakReference<PCCommunityFragment> mReference;
+
+        public StaticHandler(PCCommunityFragment fragment) {
+            mReference = new WeakReference<PCCommunityFragment>(fragment);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            PCCommunityFragment fragment = mReference.get();
+            if(fragment != null) {
+                switch (msg.what) {
+                    case 12581:
+                        fragment.setCurPage(msg.arg1);
+                        break;
+                }
+            }
+            super.handleMessage(msg);
+        }
+    }
 }

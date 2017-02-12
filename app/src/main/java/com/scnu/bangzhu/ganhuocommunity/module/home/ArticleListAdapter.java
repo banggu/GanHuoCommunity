@@ -1,6 +1,7 @@
 package com.scnu.bangzhu.ganhuocommunity.module.home;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +59,10 @@ public class ArticleListAdapter extends BaseAdapter{
 
         Article article = mArticleList.get(position);
         String url = article.getImageUrl();
-        String imageUrl = url.substring(1, url.length()-1);
+        String imageUrl = "";
+        if(!TextUtils.isEmpty(url)) {
+            imageUrl = url.substring(1, url.length()-1);
+        }
         Glide.with(mContext)
                 .load(imageUrl)
                 .centerCrop()

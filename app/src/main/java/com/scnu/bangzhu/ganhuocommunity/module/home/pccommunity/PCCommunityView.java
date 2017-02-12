@@ -14,7 +14,9 @@ public interface PCCommunityView {
 
     void setPageNum(int pageNum);
 
-    void refreshArticleList(int curPage, int actionType, List<Article> list);
+    void setCurPage(int curPage);
+
+    void refreshArticleList(int actionType, List<Article> list);
 
     void refreshHotArticleList(List<Article> list);
 }

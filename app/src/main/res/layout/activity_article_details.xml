@@ -1,19 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:divider="@drawable/divider"
     android:showDividers="end">
-    <WebView
-        android:id="@+id/article_details_webView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="300dp"
+        android:orientation="vertical">
+        <WebView
+            android:id="@+id/article_details_webView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+        <TextView
+            android:id="@+id/article_tag_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="阅读 123 · 收藏 12"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:src="@color/colorPrimaryPray"
+            android:layout_above="@+id/share_toolbar_rl"/>
+        <TextView
+            android:id="@+id/relevant_article_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="相关文章"
+            android:textSize="20sp"
+            android:padding="10dp"/>
+        <ListView
+            android:id="@+id/relevant_article_listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:src="@color/colorPrimaryPray"
+            android:layout_above="@+id/share_toolbar_rl"/>
+    </LinearLayout>
+
     <RelativeLayout
+        android:id="@+id/share_toolbar_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/border_top_bg">
         <ImageView
             android:id="@+id/love_imageView"
             android:layout_width="wrap_content"
@@ -42,4 +82,12 @@
             android:textSize="14sp"
             android:layout_centerVertical="true" />
     </RelativeLayout>
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/content_container_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+        <include layout="@layout/layout_content_edite"/>
+    </LinearLayout>
+</RelativeLayout>

@@ -8,4 +8,7 @@
     <color name="colorPrimaryBlue">#56abe4</color>
     <color name="colorPrimaryPray">#E0E0E0</color>
     <color name="colorPrimaryBlack">#767575</color>
+    <color name="colorConfirmBtn">#007FFF</color>
+    <color name="colorConfirmBtnPressed">#0076E6</color>
+
 </resources>

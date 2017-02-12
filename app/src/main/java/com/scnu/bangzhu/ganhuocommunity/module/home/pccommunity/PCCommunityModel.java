@@ -12,5 +12,5 @@ public interface PCCommunityModel {
 
     void loadHotArticleList();
 
-    void loadArticleList(final int page, final int limit, final int actionType);
+    void loadArticleList(final int page, final int limit, final int actionType, PCCommunityFragment.StaticHandler handler);
 }

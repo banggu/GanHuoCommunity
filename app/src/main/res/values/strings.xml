@@ -20,4 +20,8 @@
     <string name="take_photo">拍照</string>
     <string name="album">相册</string>
 
+    <!-- 评论 -->
+    <string name="send_content">发送</string>
+    <string name="comment">评论</string>
+
 </resources>

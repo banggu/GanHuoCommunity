@@ -84,7 +84,7 @@ public class CommentCommunityFragment extends Fragment implements CommentCommuni
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Article article = mArticleList.get(i);
                 if(article != null) {
-                    gotoArticleDetails(article.getContent());
+                    gotoArticleDetails(article);
                 }
             }
         });
@@ -118,9 +118,9 @@ public class CommentCommunityFragment extends Fragment implements CommentCommuni
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
-    private void gotoArticleDetails(String articleContent) {
+    private void gotoArticleDetails(Article article) {
         Intent intent = new Intent(getActivity(), ArticleDetailsActivity.class);
-        intent.putExtra("articleContent", articleContent);
+        intent.putExtra("article", article);
         startActivity(intent);
     }
 

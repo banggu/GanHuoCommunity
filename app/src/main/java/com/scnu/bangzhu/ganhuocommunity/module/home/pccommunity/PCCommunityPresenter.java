@@ -20,7 +20,7 @@ public interface PCCommunityPresenter {
 
     void loadHotArticleListFailtrue();
 
-    void loadArticleList(final int page, final int limit, final int actionType);
+    void loadArticleList(final int page, final int limit, final int actionType, PCCommunityFragment.StaticHandler handler);
 
     void loadArticleListSuccess(int curPage, int actionType, List<Article> list);
 
