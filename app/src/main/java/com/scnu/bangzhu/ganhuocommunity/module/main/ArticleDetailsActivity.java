@@ -27,6 +27,7 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
     private LinearLayout mCommentContainer;
     private EditText mContentEdit;
     private TextView mSendContent;
+    private ArticleDetailPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
     private void init() {
         Intent intent = getIntent();
         mArticle = (Article) intent.getSerializableExtra("article");
+        mPresenter = new ArticleDetailPresenterImpl(this);
     }
 
     private void initView() {
@@ -57,6 +59,7 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
 
     private void setListener() {
         mComment.setOnClickListener(this);
+        mSendContent.setOnClickListener(this);
     }
 
     @Override
@@ -64,6 +67,9 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
         switch (view.getId()) {
             case R.id.comment_imageView:
                 showCommentPanel();
+                break;
+            case R.id.send_content_textview:
+                mPresenter.postComment(mArticle.getObjectId(), mContentEdit.getText().toString());
                 break;
         }
     }
@@ -99,5 +105,12 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
     @Override
     public void hideCommentPanel() {
 
+    }
+
+    @Override
+    public void postCommentSuccess() {
+        mContentEdit.setText("");
+        mCommentContainer.setVisibility(View.GONE);
+        mShardToolBar.setVisibility(View.VISIBLE);
     }
 }

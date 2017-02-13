@@ -15,4 +15,6 @@ public interface ArticleDetailsView {
     void showCommentPanel();
 
     void hideCommentPanel();
+
+    void postCommentSuccess();
 }
