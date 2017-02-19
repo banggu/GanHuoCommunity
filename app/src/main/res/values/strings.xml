@@ -23,5 +23,6 @@
     <!-- 评论 -->
     <string name="send_content">发送</string>
     <string name="comment">评论</string>
+    <string name="comment_success">评论成功！</string>
 
 </resources>

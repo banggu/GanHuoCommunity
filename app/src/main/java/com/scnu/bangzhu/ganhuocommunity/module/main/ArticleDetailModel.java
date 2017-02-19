@@ -1,20 +1,14 @@
 package com.scnu.bangzhu.ganhuocommunity.module.main;
 
+import cn.bmob.v3.BmobUser;
+
 /**
  * Created by bangzhu on 2017/2/12.
  */
 public interface ArticleDetailModel {
-    void loadRelevantArticle(String type);
+    void loadRelevantArticle(BmobUser user);
 
-    void loadRelevantArticleSuccess();
-
-    void loadRelevantArticleFailture();
-
-    void loadRelevantComment();
-
-    void loadRelevantCommentSuccess();
-
-    void loadRelevantCommentFailture();
+    void loadRelevantComment(String articleId);
 
     void postComment(String articleId, String content);
 }

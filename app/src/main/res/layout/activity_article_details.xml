@@ -2,92 +2,139 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/deliver_bg"
     android:divider="@drawable/divider"
     android:showDividers="end">
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:orientation="vertical">
-        <WebView
-            android:id="@+id/article_details_webView"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/article_details_bottom">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
-        <TextView
-            android:id="@+id/article_tag_textView"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
+
+            <WebView
+                android:id="@+id/article_details_webView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorPrimaryWhite" />
+
+            <TextView
+                android:id="@+id/article_tag_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorPrimaryWhite"
+                android:text="阅读 123 · 收藏 12" />
+
+            <TextView
+                android:id="@+id/relevant_article_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryWhite"
+                android:padding="10dp"
+                android:text="相关文章"
+                android:textSize="20sp" />
+
+            <ListView
+                android:id="@+id/relevant_article_listView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryWhite" />
+
+            <LinearLayout
+                android:id="@+id/comment_panel_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryWhite"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_contacts" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="shusfasdafasdf"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/relevant_comment_listView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryWhite"/>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:id="@+id/article_details_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+        <RelativeLayout
+            android:id="@+id/share_toolbar_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="阅读 123 · 收藏 12"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="5dp"/>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:src="@color/colorPrimaryPray"
-            android:layout_above="@+id/share_toolbar_rl"/>
-        <TextView
-            android:id="@+id/relevant_article_textView"
+            android:background="@drawable/border_top_bg"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/love_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_love_unfollowl" />
+
+            <ImageView
+                android:id="@+id/comment_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/love_imageView"
+                android:src="@drawable/ic_comment" />
+
+            <ImageView
+                android:id="@+id/share_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/comment_imageView"
+                android:src="@drawable/ic_share" />
+
+            <TextView
+                android:id="@+id/collect_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="收藏40"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/content_container_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="相关文章"
-            android:textSize="20sp"
-            android:padding="10dp"/>
-        <ListView
-            android:id="@+id/relevant_article_listView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:src="@color/colorPrimaryPray"
-            android:layout_above="@+id/share_toolbar_rl"/>
+            android:visibility="gone">
+            <include layout="@layout/layout_content_edite" />
+        </LinearLayout>
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/share_toolbar_rl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/border_top_bg">
-        <ImageView
-            android:id="@+id/love_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_love_unfollowl"/>
-        <ImageView
-            android:id="@+id/comment_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_comment"
-            android:layout_toRightOf="@+id/love_imageView"
-            android:layout_marginLeft="15dp"/>
-        <ImageView
-            android:id="@+id/share_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_share"
-            android:layout_toRightOf="@+id/comment_imageView"
-            android:layout_marginLeft="15dp"/>
-        <TextView
-            android:id="@+id/collect_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="收藏40"
-            android:textSize="14sp"
-            android:layout_centerVertical="true" />
-    </RelativeLayout>
-    <LinearLayout
-        android:id="@+id/content_container_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone">
-        <include layout="@layout/layout_content_edite"/>
-    </LinearLayout>
 </RelativeLayout>

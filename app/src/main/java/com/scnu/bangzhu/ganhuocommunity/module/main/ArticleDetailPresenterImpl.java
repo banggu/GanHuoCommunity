@@ -1,5 +1,12 @@
 package com.scnu.bangzhu.ganhuocommunity.module.main;
 
+import com.scnu.bangzhu.ganhuocommunity.model.Article;
+import com.scnu.bangzhu.ganhuocommunity.model.Comment;
+
+import java.util.List;
+
+import cn.bmob.v3.BmobUser;
+
 /**
  * Created by bangzhu on 2017/2/12.
  */
@@ -13,33 +20,33 @@ public class ArticleDetailPresenterImpl implements ArticleDetailPresenter {
     }
 
     @Override
-    public void loadRelevantArticle(String type) {
-        mModel.loadRelevantArticle(type);
+    public void loadRelevantArticle(BmobUser user) {
+        mModel.loadRelevantArticle(user);
     }
 
     @Override
-    public void loadRelevantArticleSuccess() {
-        mModel.loadRelevantArticleSuccess();
+    public void loadRelevantArticleSuccess(List<Article> articleList) {
+        mView.refreshRelevantArticle(articleList);
     }
 
     @Override
     public void loadRelevantArticleFailture() {
-        mModel.loadRelevantArticleFailture();
+
     }
 
     @Override
-    public void loadRelevantComment() {
-        mModel.loadRelevantComment();
+    public void loadRelevantComment(String articleId) {
+        mModel.loadRelevantComment(articleId);
     }
 
     @Override
-    public void loadRelevantCommentSuccess() {
-        mModel.loadRelevantCommentSuccess();
+    public void loadRelevantCommentSuccess(List<Comment> commentList) {
+        mView.refreshRelevantComment(commentList);
     }
 
     @Override
     public void loadRelevantCommentFailture() {
-        mModel.loadRelevantCommentFailture();
+
     }
 
     @Override
