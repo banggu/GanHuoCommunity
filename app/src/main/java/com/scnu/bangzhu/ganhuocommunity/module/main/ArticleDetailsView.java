@@ -11,6 +11,8 @@ import java.util.List;
 public interface ArticleDetailsView {
     void setArticleContent(String content);
 
+    void setArticleTip(String readNum, String likeNum);
+
     void refreshRelevantArticle(List<Article> articleList);
 
     void refreshRelevantComment(List<Comment> commentList);

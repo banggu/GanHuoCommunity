@@ -11,4 +11,6 @@
     <color name="colorConfirmBtn">#007FFF</color>
     <color name="colorConfirmBtnPressed">#0076E6</color>
     <color name="deliver_bg">#F5F7F8</color>
+    <color name="page_bg">#F4F6F9</color>
+
 </resources>

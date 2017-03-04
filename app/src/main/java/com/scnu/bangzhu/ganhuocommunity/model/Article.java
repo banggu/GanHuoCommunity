@@ -15,6 +15,8 @@ public class Article extends BmobObject{
     private BmobUser author;
     private BmobRelation likes;
     private Integer  likesCount;
+    private BmobRelation read;
+    private Integer readCount;
 
     public String getTitle() {
         return title;
@@ -70,5 +72,21 @@ public class Article extends BmobObject{
 
     public void setLikesCount(Integer  likesCount) {
         this.likesCount = likesCount;
+    }
+
+    public BmobRelation getRead() {
+        return read;
+    }
+
+    public void setRead(BmobRelation read) {
+        this.read = read;
+    }
+
+    public Integer getReadCount() {
+        return readCount;
+    }
+
+    public void setReadCount(Integer readCount) {
+        this.readCount = readCount;
     }
 }

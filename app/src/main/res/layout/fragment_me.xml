@@ -2,12 +2,125 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/page_bg">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/personnal_info_ll"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="我"
-        android:textSize="20sp" />
+        android:gravity="center_vertical"
+        android:background="@color/colorPrimaryWhite"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        android:padding="10dp">
+        <ImageView
+            android:id="@+id/user_avatar_imageView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_contacts"
+            android:padding="10dp"/>
+        <TextView
+            android:id="@+id/user_name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="bangke"
+            android:layout_toRightOf="@+id/user_avatar_imageView"
+            android:layout_centerVertical="true"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/my_collect_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="@drawable/border_top_bg"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 我的收藏"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/ic_love_click1" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="72篇"
+            android:textColor="@color/colorPrimaryPray"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:id="@+id/textView" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/my_read_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_top_bg"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 阅读过的文章"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/ic_eye"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="357篇"
+            android:textColor="@color/colorPrimaryPray"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/my_tag_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_top_bg"
+        android:layout_marginBottom="20dp"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 标签管理"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/ic_tag"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15个"
+            android:textColor="@color/colorPrimaryPray"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/my_setting_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryWhite"
+        android:layout_marginBottom="20dp"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 设置"
+            android:drawableLeft="@drawable/ic_setting"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            />
+    </RelativeLayout>
 </LinearLayout>

@@ -47,12 +47,10 @@ public class CommentArticleListAdapter extends BaseAdapter {
         ViewHolder viewHolder = null;
         if(convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.layout_hot_article_list_item, parent, false);
-            viewHolder.relevantArticleTitle = (TextView) convertView.findViewById(R.id.hot_article_item_title_textView);
-            viewHolder.relevantArticleLove = (TextView) convertView.findViewById(R.id.hot_article_item_love_textView);
-            viewHolder.relevantArticleAuthor = (TextView) convertView.findViewById(R.id.hot_article_item_author_textView);
-            viewHolder.relevantArticleTime = (TextView) convertView.findViewById(R.id.hot_article_item_time_textView);
-            viewHolder.relevantArticleImage = (ImageView) convertView.findViewById(R.id.hot_article_item_image_imageView);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.layout_article_comment, parent, false);
+            viewHolder.commentUserImage = (ImageView) convertView.findViewById(R.id.comment_user_image_imageView);
+            viewHolder.commentUserName = (TextView) convertView.findViewById(R.id.comment_user_name_textView);
+            viewHolder.commentUserContent = (TextView) convertView.findViewById(R.id.comment_user_content_textView);
             convertView.setTag(viewHolder);
 
         } else {
@@ -61,10 +59,8 @@ public class CommentArticleListAdapter extends BaseAdapter {
 
         Comment comment = mCommentList.get(position);
         Article article = comment.getArticle();
-        viewHolder.relevantArticleTitle.setText(article.getTitle());
-        viewHolder.relevantArticleLove.setText(" " + article.getLikesCount()+"");
-        viewHolder.relevantArticleAuthor.setText(" " + article.getAuthor().getUsername());
-        viewHolder.relevantArticleTime.setText(" " + article.getCreatedAt());
+        viewHolder.commentUserName.setText(comment.getUser().getUsername());
+        viewHolder.commentUserContent.setText(comment.getContent());
 
         String url = article.getImageUrl();
         String imageUrl = url.substring(1, url.length()-1);
@@ -73,16 +69,14 @@ public class CommentArticleListAdapter extends BaseAdapter {
                 .centerCrop()
                 .placeholder(R.mipmap.ic_launcher)
                 .crossFade()
-                .into(viewHolder.relevantArticleImage);
+                .into(viewHolder.commentUserImage);
 
         return convertView;
     }
 
     public final class ViewHolder {
-        public TextView relevantArticleTitle;
-        public TextView relevantArticleLove;
-        public TextView relevantArticleAuthor;
-        public TextView relevantArticleTime;
-        public ImageView relevantArticleImage;
+        public TextView commentUserName;
+        public TextView commentUserContent;
+        public ImageView commentUserImage;
     }
 }

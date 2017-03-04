@@ -64,8 +64,9 @@ public class HotArticleListAdapter extends BaseAdapter {
         viewHolder.hotArticleAuthor.setText(" " + article.getAuthor().getUsername());
         viewHolder.hotArticleTime.setText(" " + article.getCreatedAt());
 
-        String url = article.getImageUrl();
-        String imageUrl = url.substring(1, url.length()-1);
+        String imageUrl = getUrlString(article.getImageUrl());
+//        String imageUrl = url.substring(1, url.length()-1);
+
         Glide.with(mContext)
                 .load(imageUrl)
                 .centerCrop()
@@ -73,6 +74,14 @@ public class HotArticleListAdapter extends BaseAdapter {
                 .crossFade()
                 .into(viewHolder.hotArticleImage);
         return convertView;
+    }
+
+    private String getUrlString(String url) {
+        while(url.contains("\"")) {
+            int index = url.indexOf("\"");
+            url = url.substring(index+1, url.length()-1);
+        }
+        return url;
     }
 
     public final class ViewHolder {

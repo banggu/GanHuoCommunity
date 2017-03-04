@@ -1,5 +1,6 @@
 package com.scnu.bangzhu.ganhuocommunity.module.main;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -50,6 +52,7 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
     private List<Comment> mRelevantCommentList;
     private CommentArticleListAdapter mRelevantCommentAdapter;
     private ArticleDetailPresenter mPresenter;
+    private boolean mLoveable = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,14 +102,27 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void setListener() {
+        mRelevantArticle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Article article = mRelevantArticleList.get(i);
+                startMe(ArticleDetailsActivity.this, article);
+            }
+        });
         mComment.setOnClickListener(this);
+        mLove.setOnClickListener(this);
         mSendContent.setOnClickListener(this);
         mCommentPanel.setOnClickListener(this);
     }
 
     private void setContent() {
+        mPresenter.chechLoved(mArticle);
         mPresenter.loadRelevantArticle(mArticle.getAuthor());
         mPresenter.loadRelevantComment(mArticle.getObjectId());
+
+        setCollectedNum(String.valueOf(mArticle.getLikesCount()));
+        setArticleTip(String.valueOf(mArticle.getReadCount()), String.valueOf(mArticle.getLikesCount()));
+        mPresenter.setRead(mArticle, "read");
     }
 
     private void setListViewHeightBasedOnChildren(ListView listView) {
@@ -133,11 +149,51 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
         listView.setLayoutParams(params);
     }
 
+    private void bindLoveRelation() {
+        int collectNum = getCollectNum();
+        if(mLoveable) {
+            setNotLove();
+            setCollectedNum(String.valueOf(collectNum-1));
+        } else {
+            setLove();
+            setCollectedNum(String.valueOf(collectNum+1));
+        }
+    }
+
+    private int getCollectNum() {
+        String collectStr = mCollected.getText().toString();
+        int index = collectStr.indexOf(getResources().getString(R.string.collect));
+        if(index == -1) {
+            return -1;
+        }
+        String collectNumStr = collectStr.substring(index+2);
+        return Integer.valueOf(collectNumStr);
+    }
+
+    public static void startMe(Context context, Article article) {
+        Intent intent = new Intent(context, ArticleDetailsActivity.class);
+        intent.putExtra("article", article);
+        context.startActivity(intent);
+    }
+
+    @Override
+    protected void onStop() {
+        if(mLoveable) {
+            mPresenter.setLike(mArticle, "like");
+        } else {
+//            mPresenter.deleteLike(mArticle);
+        }
+        super.onStop();
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.comment_panel_ll:
                 showCommentPanel();
+                break;
+            case R.id.love_imageView:
+                bindLoveRelation();
                 break;
             case R.id.comment_imageView:
                 showCommentPanel();
@@ -155,12 +211,17 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
             showCommentPanel();
             return true;
         }
-        return false;
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
     public void setArticleContent(String content) {
 
+    }
+
+    @Override
+    public void setArticleTip(String readNum, String likeNum) {
+        mArticleTag.setText(getResources().getString(R.string.read)+" "+readNum+ " · " +getResources().getString(R.string.collect)+likeNum);
     }
 
     @Override
@@ -181,17 +242,19 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void setLove() {
-
+        mLove.setImageResource(R.drawable.ic_love_click1);
+        mLoveable = true;
     }
 
     @Override
     public void setNotLove() {
-
+        mLove.setImageResource(R.drawable.ic_love_unfollowl);
+        mLoveable = false;
     }
 
     @Override
     public void setCollectedNum(String num) {
-
+        mCollected.setText(getResources().getString(R.string.collect) + num);
     }
 
     @Override

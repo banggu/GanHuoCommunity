@@ -20,6 +20,35 @@ public class ArticleDetailPresenterImpl implements ArticleDetailPresenter {
     }
 
     @Override
+    public void chechLoved(Article article) {
+        mModel.chechLoved(article);
+    }
+
+    @Override
+    public void hadLoved(boolean love) {
+        if(love) {
+            mView.setLove();
+        } else {
+            mView.setNotLove();
+        }
+    }
+
+    @Override
+    public void setRead(Article article, String bindType) {
+        mModel.setRead(article, bindType);
+    }
+
+    @Override
+    public void setLike(Article article, String bindType) {
+        mModel.setLike(article, bindType);
+    }
+
+    @Override
+    public void deleteLike(Article article) {
+        mModel.deleteLike(article);
+    }
+
+    @Override
     public void loadRelevantArticle(BmobUser user) {
         mModel.loadRelevantArticle(user);
     }

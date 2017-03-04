@@ -11,6 +11,16 @@ import cn.bmob.v3.BmobUser;
  * Created by bangzhu on 2017/2/12.
  */
 public interface ArticleDetailPresenter {
+    void chechLoved(Article article);
+
+    void hadLoved(boolean love);
+
+    void setRead(Article article, String bindType);
+
+    void setLike(Article article, String bindType);
+
+    void deleteLike(Article article);
+
     void loadRelevantArticle(BmobUser user);
 
     void loadRelevantArticleSuccess(List<Article> articleList);

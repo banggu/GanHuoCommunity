@@ -7,12 +7,15 @@ import com.scnu.bangzhu.ganhuocommunity.model.Comment;
 
 import java.util.List;
 
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by bangzhu on 2017/2/12.
@@ -22,6 +25,67 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
 
     public ArticleDetailModelImpl(ArticleDetailPresenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void chechLoved(Article article) {
+        // 查询喜欢这篇文章的所有用户，因此查询的是用户表
+        BmobQuery<BmobUser> query = new BmobQuery<>();
+        Article a = new Article();
+        a.setObjectId(article.getObjectId());
+        //likes是Post表中的字段，用来存储所有喜欢该帖子的用户
+        query.addWhereRelatedTo("likes", new BmobPointer(a));
+        query.findObjects(new FindListener<BmobUser>() {
+
+            @Override
+            public void done(List<BmobUser> object,BmobException e) {
+                if(e==null){
+                    BmobUser user = BmobUser.getCurrentUser();
+                    for(BmobUser u : object) {
+                        if(u.getObjectId().equals(user.getObjectId())) {
+                            mPresenter.hadLoved(true);
+                            return;
+                        }
+                    }
+                    mPresenter.hadLoved(false);
+                }else{
+                    mPresenter.hadLoved(false);
+                }
+            }
+
+        });
+    }
+
+    @Override
+    public void setRead(Article article, String bindType) {
+        bindRelation(article, bindType);
+    }
+
+    @Override
+    public void setLike(Article article, String bindType) {
+        bindRelation(article, bindType);
+    }
+
+    @Override
+    public void deleteLike(final Article a) {
+        Article article = new Article();
+        article.setObjectId(a.getObjectId());
+        BmobUser user = BmobUser.getCurrentUser();
+        BmobRelation relation = new BmobRelation();
+        relation.remove(user);
+        article.setLikes(relation);
+        article.update(new UpdateListener() {
+
+            @Override
+            public void done(BmobException e) {
+                if(e==null){
+                    getRelationCount(a, "like");
+                }else{
+
+                }
+            }
+
+        });
     }
 
     @Override
@@ -81,6 +145,77 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
                 } else {
 
                 }
+            }
+        });
+    }
+
+    //绑定关注关系
+    private void bindRelation(Article a, final String bindType) {
+        BmobUser user = BmobUser.getCurrentUser();
+        final Article article = new Article();
+        article.setObjectId(a.getObjectId());
+        //将当前用户添加到Post表中的likes字段值中，表明当前用户喜欢该帖子
+        BmobRelation relation = new BmobRelation();
+        //将当前用户添加到多对多关联中
+        relation.add(user);
+        //多对多关联指向`post`的`likes`字段
+        if(bindType == "like") {
+            article.setLikes(relation);
+        } else if(bindType == "read") {
+            article.setRead(relation);
+        }
+
+        article.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if(e==null){
+                    Log.i("HZWING","多对多关联添加成功");
+                    getRelationCount(article, bindType);
+                }else{
+                    Log.i("HZWING","失败："+e.getMessage());
+                }
+            }
+
+        });
+    }
+
+    private void getRelationCount(Article a, final String bindType) {
+        BmobQuery<BmobUser> query = new BmobQuery<BmobUser>();
+        final Article article = new Article();
+        article.setObjectId(a.getObjectId());
+        //likes是Post表中的字段，用来存储所有喜欢该帖子的用户
+        if(bindType == "like") {
+            query.addWhereRelatedTo("likes", new BmobPointer(article));
+        } else if(bindType == "read") {
+            query.addWhereRelatedTo("read", new BmobPointer(article));
+        }
+        query.findObjects(new FindListener<BmobUser>() {
+
+            @Override
+            public void done(List<BmobUser> object,BmobException e) {
+                if(e==null){
+                    Log.i("bmob","查询个数："+object.size());
+                    updateArticle(article, object.size(), bindType);
+                }else{
+                    Log.i("bmob","失败："+e.getMessage());
+                }
+            }
+
+        });
+    }
+
+    private void updateArticle(Article a, int num, String bindType) {
+        Article article = new Article();
+        if (bindType == "like") {
+            article.setLikesCount(num);
+        } else if(bindType == "read") {
+            article.setReadCount(num);
+        }
+
+        article.update(a.getObjectId(), new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                Log.i("smile", "update success");
             }
         });
     }

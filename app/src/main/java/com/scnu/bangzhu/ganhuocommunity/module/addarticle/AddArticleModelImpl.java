@@ -56,6 +56,8 @@ public class AddArticleModelImpl implements AddArticleModel{
         article.setType(type);
         article.setImageUrl(imageUrl);
         article.setContent(content);
+        article.setLikesCount(0);
+        article.setReadCount(0);
         article.setAuthor(author);
         article.save(new SaveListener<String>() {
 

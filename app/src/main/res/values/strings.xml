@@ -24,5 +24,8 @@
     <string name="send_content">发送</string>
     <string name="comment">评论</string>
     <string name="comment_success">评论成功！</string>
+    <string name="collect">收藏</string>
+    <string name="read">阅读</string>
+    <string name="say_your_thinks">说说你的想法...</string>
 
 </resources>

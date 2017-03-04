@@ -6,10 +6,67 @@
     android:divider="@drawable/divider"
     android:showDividers="end">
 
+    <LinearLayout
+        android:id="@+id/article_details_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <RelativeLayout
+            android:id="@+id/share_toolbar_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_top_bg"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/love_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_love_unfollowl" />
+
+            <ImageView
+                android:id="@+id/comment_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/love_imageView"
+                android:src="@drawable/ic_comment" />
+
+            <ImageView
+                android:id="@+id/share_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/comment_imageView"
+                android:src="@drawable/ic_share" />
+
+            <TextView
+                android:id="@+id/collect_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="收藏40"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/content_container_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <include layout="@layout/layout_content_edite" />
+        </LinearLayout>
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_above="@+id/article_details_bottom">
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:text="shusfasdafasdf"
+                    android:text="@string/say_your_thinks"
                     android:textSize="15sp" />
             </LinearLayout>
 
@@ -83,58 +140,5 @@
                 android:background="@color/colorPrimaryWhite"/>
         </LinearLayout>
     </ScrollView>
-    <LinearLayout
-        android:id="@+id/article_details_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true">
-        <RelativeLayout
-            android:id="@+id/share_toolbar_rl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_top_bg"
-            android:padding="10dp">
-
-            <ImageView
-                android:id="@+id/love_imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_love_unfollowl" />
-
-            <ImageView
-                android:id="@+id/comment_imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@+id/love_imageView"
-                android:src="@drawable/ic_comment" />
-
-            <ImageView
-                android:id="@+id/share_imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@+id/comment_imageView"
-                android:src="@drawable/ic_share" />
-
-            <TextView
-                android:id="@+id/collect_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="收藏40"
-                android:textSize="14sp" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/content_container_ll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
-            <include layout="@layout/layout_content_edite" />
-        </LinearLayout>
-    </LinearLayout>
 
 </RelativeLayout>
