@@ -15,12 +15,13 @@ import com.scnu.bangzhu.ganhuocommunity.BaseActivity;
 import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.module.addarticle.AddArticleActivity;
 import com.scnu.bangzhu.ganhuocommunity.module.home.HomeFragment;
+import com.scnu.bangzhu.ganhuocommunity.module.main.hotnews.HotArticleFragment;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
     private FloatingActionButton mAddArticle;
     private ImageView mHomeIcon, mHotNewsIcon, mMsgIcon, mMeIcon;
     private HomeFragment mHomeFragment;
-    private HotNewsFragment mHotNewsFragment;
+    private HotArticleFragment mHotArticleFragment;
     private MeFragment mMeFragememt;
     private MessageFragment mMsgFragment;
     private long mExitTime;
@@ -115,11 +116,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 mHomeIcon.setImageResource(R.drawable.ic_home_pressed);
                 break;
             case 1 :
-                if(mHotNewsFragment == null) {
-                    mHotNewsFragment = new HotNewsFragment();
-                    fragmentTrasaction.add(R.id.content_frameLayout, mHotNewsFragment);
+                if(mHotArticleFragment == null) {
+                    mHotArticleFragment = new HotArticleFragment();
+                    fragmentTrasaction.add(R.id.content_frameLayout, mHotArticleFragment);
                 } else {
-                    fragmentTrasaction.show(mHotNewsFragment);
+                    fragmentTrasaction.show(mHotArticleFragment);
                 }
                 mHotNewsIcon.setImageResource(R.drawable.ic_hotnews_pressed);
                 break;
@@ -149,8 +150,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         if(mHomeFragment != null) {
             ft.hide(mHomeFragment);
         }
-        if(mHotNewsFragment != null) {
-            ft.hide(mHotNewsFragment);
+        if(mHotArticleFragment != null) {
+            ft.hide(mHotArticleFragment);
         }
         if(mMsgFragment != null) {
             ft.hide(mMsgFragment);

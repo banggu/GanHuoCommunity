@@ -28,4 +28,6 @@
     <string name="read">阅读</string>
     <string name="say_your_thinks">说说你的想法...</string>
 
+    <!-- 热门模块-->
+    <string name="hot_article">热门文章</string>
 </resources>
