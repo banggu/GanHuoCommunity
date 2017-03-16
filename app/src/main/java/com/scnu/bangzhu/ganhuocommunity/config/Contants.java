@@ -89,4 +89,6 @@ public class Contants {
             "    </article>" +
             "</body>" +
             "</html>";
+
+    public static final String USER_AVATAR = "http://bmob-cdn-8166.b0.upaiyun.com/2017/03/14/1ec5d752838340408f2d2fee96f6bc7d.jpg";
 }

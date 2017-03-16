@@ -1,32 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/hot_news_swiperefresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-        <LinearLayout
+        <ListView
+            android:id="@+id/hot_article_lisetview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <include layout="@layout/layout_listview_header_viewpager" />
-            <ListView
-                android:id="@+id/hot_article_lisetview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:layout_height="wrap_content" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@+id/loading_data_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center"
+        android:orientation="horizontal"
         android:visibility="gone">
+
         <ProgressBar
             android:id="@+id/loading_data_progressbar"
             android:layout_width="wrap_content"

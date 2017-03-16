@@ -1,6 +1,7 @@
 package com.scnu.bangzhu.ganhuocommunity.module.main;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
+import com.scnu.bangzhu.ganhuocommunity.model.MyUser;
 
 import cn.bmob.v3.BmobUser;
 
@@ -16,7 +17,7 @@ public interface ArticleDetailModel {
 
     void deleteLike(Article article);
 
-    void loadRelevantArticle(BmobUser user);
+    void loadRelevantArticle(MyUser user);
 
     void loadRelevantComment(String articleId);
 

@@ -12,6 +12,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -19,6 +21,7 @@ import android.widget.ListView;
 import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
 import com.scnu.bangzhu.ganhuocommunity.module.home.ArticleListAdapter;
+import com.scnu.bangzhu.ganhuocommunity.module.main.ArticleDetailsActivity;
 import com.scnu.bangzhu.ganhuocommunity.widget.CustomListView;
 import com.scnu.bangzhu.ganhuocommunity.widget.CustomSwipeRefreshLayout;
 import com.scnu.bangzhu.ganhuocommunity.widget.CustomViewPager;
@@ -34,7 +37,7 @@ import java.util.concurrent.TimeUnit;
  * Created by bangzhu on 2016/12/5.
  */
 public class HotArticleFragment extends Fragment implements HotArticleView, SwipeRefreshLayout.OnRefreshListener {
-    private View mView;
+    private View mView, mHeader;
     private SwipeRefreshLayout mRefreshLayout;
     private LinearLayout mDotGroup;
     private ListView mHotArticle;
@@ -54,6 +57,9 @@ public class HotArticleFragment extends Fragment implements HotArticleView, Swip
     private int mTouchSlop;
     //上一次的位置
     private int mLastX;
+    //ListView 中最后一个可见的列表项下标
+    private int mLastVisibleItemPosition = 0;
+    private PageModel mPageModel = new PageModel(0, 0, 10, 0);
 
     @Nullable
     @Override
@@ -73,13 +79,13 @@ public class HotArticleFragment extends Fragment implements HotArticleView, Swip
     }
 
     private void initView() {
-//        mHeader = LayoutInflater.from(getActivity()).inflate(R.layout.layout_listview_header_viewpager, null);
-        mViewPager = (ViewPager) mView.findViewById(R.id.hot_article_viewpager);
+        mHeader = LayoutInflater.from(getActivity()).inflate(R.layout.layout_listview_header_viewpager, null);
+        mViewPager = (ViewPager) mHeader.findViewById(R.id.hot_article_viewpager);
         mRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.hot_news_swiperefresh);
-        mDotGroup = (LinearLayout) mView.findViewById(R.id.ll_dotgroup);
+        mDotGroup = (LinearLayout) mHeader.findViewById(R.id.ll_dotgroup);
         mHotArticle = (ListView) mView.findViewById(R.id.hot_article_lisetview);
         mLoadingData = (LinearLayout) mView.findViewById(R.id.loading_data_ll);
-//        mHotArticle.addHeaderView(mHeader);
+        mHotArticle.addHeaderView(mHeader);
 
         mPresenter = new HotArticlePresenterImpl(this);
         mTouchSlop = ViewConfiguration.get(getActivity()).getScaledTouchSlop();
@@ -118,12 +124,49 @@ public class HotArticleFragment extends Fragment implements HotArticleView, Swip
                 return false;
             }
         });
+
+        mHotArticle.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                //滑动到最后一行
+                if(firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
+                    //向上滑动
+                    if(firstVisibleItem > mLastVisibleItemPosition) {
+                        mLoadingData.setVisibility(View.VISIBLE);
+                        if(mPageModel.curPage < mPageModel.pageNum - 1) {
+                            mPageModel.actionType = 1;
+                            mPresenter.loadArticle(mPageModel);
+                        } else {//若为最后一页，则不加载数据
+                            mLoadingData.setVisibility(View.GONE);
+                        }
+                    }
+                }
+                if (firstVisibleItem < mLastVisibleItemPosition) {
+                    //向下滑动
+                }
+                mLastVisibleItemPosition = firstVisibleItem;
+            }
+        });
+
+        mHotArticle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ArticleDetailsActivity.startMe(getActivity(), mArticleList.get(i));
+            }
+        });
     }
 
     private void setContent() {
+        mPresenter.getPageNum(mPageModel);
         mPresenter.loadHotArticle();
-        mPresenter.loadArticle();
+        mPresenter.loadArticle(mPageModel);
         initDotGroup();
+        int p = mPageModel.pageNum;
     }
 
     //初始化点列表视图
@@ -166,12 +209,18 @@ public class HotArticleFragment extends Fragment implements HotArticleView, Swip
 
     @Override
     public void refreshArticle(List<Article> list) {
+        mLoadingData.setVisibility(View.GONE);
         if(list == null || list.size() == 0) {
             mViewPager.setVisibility(View.GONE);
             return;
         }
-        mArticleList.clear();
+        if(mPageModel.actionType == 0) {
+            mArticleList.clear();
+        }
         mArticleList.addAll(list);
+        if (mPageModel.actionType == 1) {
+            mHotArticle.setSelection(mArticleList.size()-1);
+        }
         mArticleListAdapter.notifyDataSetInvalidated();
         mRefreshLayout.setRefreshing(false);
     }
@@ -179,7 +228,8 @@ public class HotArticleFragment extends Fragment implements HotArticleView, Swip
     @Override
     public void onRefresh() {
         mPresenter.loadHotArticle();
-        mPresenter.loadArticle();
+        mPageModel.actionType = 0;
+        mPresenter.loadArticle(mPageModel);
     }
 
     class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
@@ -234,4 +284,18 @@ public class HotArticleFragment extends Fragment implements HotArticleView, Swip
             }
         }
     };
+
+    class PageModel {
+        public int pageNum;
+        public int curPage;
+        public int limit;
+        public int actionType;
+
+        public PageModel(int pageNum, int curPage, int limit, int actionType) {
+            this.pageNum = pageNum;
+            this.curPage = curPage;
+            this.limit = limit;
+            this.actionType = actionType;
+        }
+    }
 }

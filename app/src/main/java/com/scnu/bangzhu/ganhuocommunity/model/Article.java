@@ -12,7 +12,7 @@ public class Article extends BmobObject{
     private String type;
     private String imageUrl;
     private String content;
-    private BmobUser author;
+    private MyUser author;
     private BmobRelation likes;
     private Integer  likesCount;
     private BmobRelation read;
@@ -50,11 +50,11 @@ public class Article extends BmobObject{
         this.content = content;
     }
 
-    public BmobUser getAuthor() {
+    public MyUser getAuthor() {
         return author;
     }
 
-    public void setAuthor(BmobUser author) {
+    public void setAuthor(MyUser author) {
         this.author = author;
     }
 

@@ -18,6 +18,11 @@ public class HotArticlePresenterImpl implements HotArticlePresenter {
     }
 
     @Override
+    public void getPageNum(HotArticleFragment.PageModel pageModel) {
+        mModel.getPageNum(pageModel);
+    }
+
+    @Override
     public void loadHotArticle() {
         mModel.loadHotArticle();
     }
@@ -33,8 +38,8 @@ public class HotArticlePresenterImpl implements HotArticlePresenter {
     }
 
     @Override
-    public void loadArticle() {
-        mModel.loadArticle();
+    public void loadArticle(HotArticleFragment.PageModel pageModel) {
+        mModel.loadArticle(pageModel);
     }
 
     @Override

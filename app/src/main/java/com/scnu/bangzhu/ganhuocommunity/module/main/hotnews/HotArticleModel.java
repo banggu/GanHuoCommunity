@@ -6,7 +6,9 @@ package com.scnu.bangzhu.ganhuocommunity.module.main.hotnews;
 
 public interface HotArticleModel {
 
+    void getPageNum(HotArticleFragment.PageModel pageModel);
+
     void loadHotArticle();
 
-    void loadArticle();
+    void loadArticle(HotArticleFragment.PageModel pageModel);
 }

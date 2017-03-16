@@ -9,7 +9,7 @@ import cn.bmob.v3.BmobUser;
 
 public class Comment extends BmobObject {
     private String content;
-    private BmobUser user;
+    private MyUser user;
     private Article article;
 
     public String getContent() {
@@ -20,11 +20,11 @@ public class Comment extends BmobObject {
         this.content = content;
     }
 
-    public BmobUser getUser() {
+    public MyUser getUser() {
         return user;
     }
 
-    public void setUser(BmobUser user) {
+    public void setUser(MyUser user) {
         this.user = user;
     }
 

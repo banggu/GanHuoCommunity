@@ -1,6 +1,7 @@
 package com.scnu.bangzhu.ganhuocommunity.module.register;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.scnu.bangzhu.ganhuocommunity.BaseActivity;
 import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.module.login.LoginActivity;
 
@@ -17,7 +19,7 @@ import cn.bmob.v3.BmobConfig;
 /**
  * Created by chenjianbang on 2016/12/12.
  */
-public class RegisterActivity extends Activity implements RegisterView, View.OnClickListener{
+public class RegisterActivity extends BaseActivity implements RegisterView, View.OnClickListener{
     private TextView mGotoLogin;
     private EditText mUsername, mPassword, mEmail;
     private Button mRegister;
@@ -42,7 +44,25 @@ public class RegisterActivity extends Activity implements RegisterView, View.OnC
     }
 
     private void setListeners() {
+        mGotoLogin.setOnClickListener(this);
         mRegister.setOnClickListener(this);
+    }
+
+    @Override
+    public void showUsernameError() {
+        mUsername.setHint(getResources().getString(R.string.user_name_error));
+        mUsername.requestFocus();
+    }
+
+    @Override
+    public void showPasswordError() {
+        mPassword.setHint(getResources().getString(R.string.password_error));
+        mPassword.requestFocus();
+    }
+
+    @Override
+    public void showRegisterError(int strId) {
+        showToast(getResources().getString(strId));
     }
 
     @Override
@@ -62,8 +82,7 @@ public class RegisterActivity extends Activity implements RegisterView, View.OnC
 
     @Override
     public void navigateToLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        LoginActivity.startMe(this);
         finish();
     }
 
@@ -71,7 +90,7 @@ public class RegisterActivity extends Activity implements RegisterView, View.OnC
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.goto_login_textView :
-                gotoLogin();
+                navigateToLogin();
                 break;
             case R.id.register_button :
                 mPresenter.register(mUsername.getText().toString(), mPassword.getText().toString(), mEmail.getText().toString());
@@ -79,9 +98,8 @@ public class RegisterActivity extends Activity implements RegisterView, View.OnC
         }
     }
 
-    private void gotoLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();
+    public static void startMe(Context context) {
+        Intent intent = new Intent(context, RegisterActivity.class);
+        context.startActivity(intent);
     }
 }

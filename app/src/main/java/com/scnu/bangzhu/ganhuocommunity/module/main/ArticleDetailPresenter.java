@@ -2,6 +2,7 @@ package com.scnu.bangzhu.ganhuocommunity.module.main;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
 import com.scnu.bangzhu.ganhuocommunity.model.Comment;
+import com.scnu.bangzhu.ganhuocommunity.model.MyUser;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface ArticleDetailPresenter {
 
     void deleteLike(Article article);
 
-    void loadRelevantArticle(BmobUser user);
+    void loadRelevantArticle(MyUser user);
 
     void loadRelevantArticleSuccess(List<Article> articleList);
 

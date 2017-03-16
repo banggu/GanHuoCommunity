@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
 import com.scnu.bangzhu.ganhuocommunity.model.Comment;
+import com.scnu.bangzhu.ganhuocommunity.model.MyUser;
 
 import java.util.List;
 
@@ -30,18 +31,18 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
     @Override
     public void chechLoved(Article article) {
         // 查询喜欢这篇文章的所有用户，因此查询的是用户表
-        BmobQuery<BmobUser> query = new BmobQuery<>();
+        BmobQuery<MyUser> query = new BmobQuery<>();
         Article a = new Article();
         a.setObjectId(article.getObjectId());
         //likes是Post表中的字段，用来存储所有喜欢该帖子的用户
         query.addWhereRelatedTo("likes", new BmobPointer(a));
-        query.findObjects(new FindListener<BmobUser>() {
+        query.findObjects(new FindListener<MyUser>() {
 
             @Override
-            public void done(List<BmobUser> object,BmobException e) {
+            public void done(List<MyUser> object,BmobException e) {
                 if(e==null){
-                    BmobUser user = BmobUser.getCurrentUser();
-                    for(BmobUser u : object) {
+                    MyUser user = BmobUser.getCurrentUser(MyUser.class);
+                    for(MyUser u : object) {
                         if(u.getObjectId().equals(user.getObjectId())) {
                             mPresenter.hadLoved(true);
                             return;
@@ -70,7 +71,7 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
     public void deleteLike(final Article a) {
         Article article = new Article();
         article.setObjectId(a.getObjectId());
-        BmobUser user = BmobUser.getCurrentUser();
+        MyUser user = BmobUser.getCurrentUser(MyUser.class);
         BmobRelation relation = new BmobRelation();
         relation.remove(user);
         article.setLikes(relation);
@@ -89,7 +90,7 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
     }
 
     @Override
-    public void loadRelevantArticle(BmobUser user) {
+    public void loadRelevantArticle(MyUser user) {
         BmobQuery<Article> query = new BmobQuery<Article>();
         query.addWhereEqualTo("author", user);    // 查询当前用户的所有帖子
         query.order("likesCount");
@@ -129,7 +130,7 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
 
     @Override
     public void postComment(String articleId, String content) {
-        BmobUser user = BmobUser.getCurrentUser();
+        MyUser user = BmobUser.getCurrentUser(MyUser.class);
         Article article = new Article();
         article.setObjectId(articleId);
         Comment comment = new Comment();
@@ -151,7 +152,7 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
 
     //绑定关注关系
     private void bindRelation(Article a, final String bindType) {
-        BmobUser user = BmobUser.getCurrentUser();
+        MyUser user = BmobUser.getCurrentUser(MyUser.class);
         final Article article = new Article();
         article.setObjectId(a.getObjectId());
         //将当前用户添加到Post表中的likes字段值中，表明当前用户喜欢该帖子
@@ -180,7 +181,7 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
     }
 
     private void getRelationCount(Article a, final String bindType) {
-        BmobQuery<BmobUser> query = new BmobQuery<BmobUser>();
+        BmobQuery<MyUser> query = new BmobQuery<MyUser>();
         final Article article = new Article();
         article.setObjectId(a.getObjectId());
         //likes是Post表中的字段，用来存储所有喜欢该帖子的用户
@@ -189,10 +190,10 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
         } else if(bindType == "read") {
             query.addWhereRelatedTo("read", new BmobPointer(article));
         }
-        query.findObjects(new FindListener<BmobUser>() {
+        query.findObjects(new FindListener<MyUser>() {
 
             @Override
-            public void done(List<BmobUser> object,BmobException e) {
+            public void done(List<MyUser> object,BmobException e) {
                 if(e==null){
                     Log.i("bmob","查询个数："+object.size());
                     updateArticle(article, object.size(), bindType);

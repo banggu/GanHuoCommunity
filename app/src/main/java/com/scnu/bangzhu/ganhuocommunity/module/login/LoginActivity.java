@@ -1,6 +1,7 @@
 package com.scnu.bangzhu.ganhuocommunity.module.login;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -75,9 +76,25 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
     }
 
     private void gotoRegister() {
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
+        RegisterActivity.startMe(this);
         finish();
+    }
+
+    @Override
+    public void showUsernameError() {
+        mUsername.setHint(getResources().getString(R.string.user_name_error));
+        mUsername.requestFocus();
+    }
+
+    @Override
+    public void showPasswordError() {
+        mPassword.setHint(getResources().getString(R.string.password_error));
+        mPassword.requestFocus();
+    }
+
+    @Override
+    public void showLoginError(int contentId) {
+        showToast(getResources().getString(contentId));
     }
 
     @Override
@@ -115,5 +132,10 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
                 mPresenter.login(mAccount, mPwd);
                 break;
         }
+    }
+
+    public static void startMe(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
     }
 }

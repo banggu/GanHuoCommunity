@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/page_bg">
+    android:background="@color/page_bg"
+    android:id="@+id/list_view_header_ll">
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

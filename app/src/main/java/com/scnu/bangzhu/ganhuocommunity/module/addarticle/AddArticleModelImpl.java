@@ -3,6 +3,7 @@ package com.scnu.bangzhu.ganhuocommunity.module.addarticle;
 import android.util.Log;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
+import com.scnu.bangzhu.ganhuocommunity.model.MyUser;
 
 import java.io.File;
 
@@ -50,7 +51,7 @@ public class AddArticleModelImpl implements AddArticleModel{
 
     @Override
     public void postArticle(String title, String type, String imageUrl, String content) {
-        BmobUser author = BmobUser.getCurrentUser(BmobUser.class);
+        MyUser author = BmobUser.getCurrentUser(MyUser.class);
         Article article = new Article();
         article.setTitle(title);
         article.setType(type);

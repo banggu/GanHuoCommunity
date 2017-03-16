@@ -5,4 +5,8 @@ package com.scnu.bangzhu.ganhuocommunity.module.login;
  */
 public interface LoginPresenter {
     void login(String usernamem, String passwrod);
+
+    void loginSuccess();
+
+    void loginFailtrue(int errType);
 }

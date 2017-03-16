@@ -5,4 +5,8 @@ package com.scnu.bangzhu.ganhuocommunity.module.register;
  */
 public interface RegisterPresenter {
     void register(String usernamem, String passwrod, String email);
+
+    void registerSuccess();
+
+    void registerFailtrue(int errType);
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
+import com.scnu.bangzhu.ganhuocommunity.module.main.ArticleDetailsActivity;
 import com.scnu.bangzhu.ganhuocommunity.util.StringUtil;
 
 /**
@@ -30,6 +31,7 @@ public class ViewPagerFragment extends Fragment {
         mView = inflater.inflate(R.layout.layout_viewpager_fragment, container, false);
         init();
         initView();
+        initEvent();
         setContent();
         return mView;
     }
@@ -42,6 +44,15 @@ public class ViewPagerFragment extends Fragment {
     private void initView() {
         mArticleImage = (ImageView) mView.findViewById(R.id.viewpager_fragment_image);
         mContent = (TextView) mView.findViewById(R.id.viewpager_fragment_content);
+    }
+
+    private void initEvent() {
+        mArticleImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArticleDetailsActivity.startMe(getActivity(), mArticle);
+            }
+        });
     }
 
     private void setContent() {

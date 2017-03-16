@@ -2,6 +2,7 @@ package com.scnu.bangzhu.ganhuocommunity.module.main;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
 import com.scnu.bangzhu.ganhuocommunity.model.Comment;
+import com.scnu.bangzhu.ganhuocommunity.model.MyUser;
 
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class ArticleDetailPresenterImpl implements ArticleDetailPresenter {
     }
 
     @Override
-    public void loadRelevantArticle(BmobUser user) {
+    public void loadRelevantArticle(MyUser user) {
         mModel.loadRelevantArticle(user);
     }
 
