@@ -31,10 +31,12 @@ public class CourseCommunityModelImpl implements CourseCommunityModel {
         query.doSQLQuery(sql.toString(), new SQLQueryListener<Article>() {
             @Override
             public void done(BmobQueryResult<Article> result, BmobException e) {
-                List<Article> list = (List<Article>) result.getResults();
-                int count  = list.size();
-                int pageNum = count/limit + 1;
-                mPresenter.queryPageNumSuccess(pageNum);
+                if(e == null) {
+                    List<Article> list = (List<Article>) result.getResults();
+                    int count  = list.size();
+                    int pageNum = count/limit + 1;
+                    mPresenter.queryPageNumSuccess(pageNum);
+                }
             }
         });
     }

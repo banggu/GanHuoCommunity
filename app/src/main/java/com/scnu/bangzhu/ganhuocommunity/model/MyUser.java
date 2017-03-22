@@ -1,6 +1,7 @@
 package com.scnu.bangzhu.ganhuocommunity.model;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobRelation;
 
 /**
  * Created by bangzhu on 2017/3/14.
@@ -17,4 +18,5 @@ public class MyUser extends BmobUser {
         this.userAvatar = userAvatar;
 
     }
+
 }

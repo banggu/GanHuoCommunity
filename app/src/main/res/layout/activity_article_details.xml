@@ -5,6 +5,13 @@
     android:background="@color/deliver_bg"
     android:divider="@drawable/divider"
     android:showDividers="end">
+    <LinearLayout
+        android:id="@+id/article_details_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+        <include layout="@layout/layout_article_details_header"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/article_details_bottom"
@@ -64,9 +71,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/article_details_top"
         android:layout_above="@+id/article_details_bottom">
         <LinearLayout
             android:layout_width="match_parent"

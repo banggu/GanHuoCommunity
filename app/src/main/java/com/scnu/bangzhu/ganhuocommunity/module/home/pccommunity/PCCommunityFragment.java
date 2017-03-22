@@ -20,20 +20,11 @@ import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
 import com.scnu.bangzhu.ganhuocommunity.module.home.ArticleListAdapter;
 import com.scnu.bangzhu.ganhuocommunity.module.home.HotArticleListAdapter;
-import com.scnu.bangzhu.ganhuocommunity.module.main.ArticleDetailsActivity;
-import com.scnu.bangzhu.ganhuocommunity.module.main.MyFragmentPagerAdapter;
+import com.scnu.bangzhu.ganhuocommunity.module.main.articledetail.ArticleDetailsActivity;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.datatype.BmobPointer;
-import cn.bmob.v3.datatype.BmobRelation;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by chenjianbang on 2016/12/26.

@@ -1,7 +1,6 @@
-package com.scnu.bangzhu.ganhuocommunity.module.main;
+package com.scnu.bangzhu.ganhuocommunity.module.main.articledetail;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,21 +17,33 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.scnu.bangzhu.ganhuocommunity.BaseActivity;
 import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
 import com.scnu.bangzhu.ganhuocommunity.model.Comment;
 import com.scnu.bangzhu.ganhuocommunity.module.home.HotArticleListAdapter;
+import com.scnu.bangzhu.ganhuocommunity.module.main.authordetail.AuthorDetailActivity;
 import com.scnu.bangzhu.ganhuocommunity.util.SoftKeyBoardUtil;
+import com.scnu.bangzhu.ganhuocommunity.util.StringUtil;
 import com.scnu.bangzhu.ganhuocommunity.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by chenjianbang on 2016/12/26.
  */
 public class ArticleDetailsActivity extends BaseActivity implements View.OnClickListener, ArticleDetailsView {
+    //标题栏相关控件
+    private ImageView mBack;
+    private LinearLayout mUserArea;
+    private CircleImageView mUserAvatar;
+    private TextView mAuthorName;
+    private ImageView mMore;
+
     private WebView mWebVeiw;
     private TextView mArticleTag, mRelevantArticleTip;
     private ListView mRelevantArticle, mRelevantComment;
@@ -72,6 +83,11 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void initView() {
+        mBack = (ImageView) findViewById(R.id.article_details_back);
+        mUserArea = (LinearLayout) findViewById(R.id.article_details_user_area);
+        mUserAvatar = (CircleImageView) findViewById(R.id.article_details_avatar);
+        mAuthorName = (TextView) findViewById(R.id.article_details_author);
+        mMore = (ImageView) findViewById(R.id.article_details_more);
         mWebVeiw = (WebView) findViewById(R.id.article_details_webView);
         mWebVeiw.loadDataWithBaseURL(null, mArticle.getContent(), "text/html", "utf-8", null);
         mArticleTag = (TextView) findViewById(R.id.article_tag_textView);
@@ -102,6 +118,9 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void setListener() {
+        mBack.setOnClickListener(this);
+        mUserArea.setOnClickListener(this);
+        mMore.setOnClickListener(this);
         mRelevantArticle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -116,6 +135,7 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void setContent() {
+        setAvatarAndUsername();
         mPresenter.chechLoved(mArticle);
         mPresenter.loadRelevantArticle(mArticle.getAuthor());
         mPresenter.loadRelevantComment(mArticle.getObjectId());
@@ -125,6 +145,18 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
         mPresenter.setRead(mArticle, "read");
     }
 
+    //设置用户头像和用户名
+    private void setAvatarAndUsername() {
+        Glide.with(this)
+                .load(StringUtil.getOriginUrl(mArticle.getAuthor().getUserAvatar()))
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher)
+                .crossFade()
+                .into(mUserAvatar);
+        mAuthorName.setText(mArticle.getAuthor().getUsername());
+    }
+
+    //计算ListView 的高度
     private void setListViewHeightBasedOnChildren(ListView listView) {
         // 获取ListView对应的Adapter
         BaseAdapter listAdapter = (BaseAdapter) listView.getAdapter();
@@ -170,6 +202,10 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
         return Integer.valueOf(collectNumStr);
     }
 
+    private void gotoAuthorDetail() {
+        AuthorDetailActivity.startMe(this, mArticle.getAuthor());
+    }
+
     public static void startMe(Context context, Article article) {
         Intent intent = new Intent(context, ArticleDetailsActivity.class);
         intent.putExtra("article", article);
@@ -181,7 +217,7 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
         if(mLoveable) {
             mPresenter.setLike(mArticle, "like");
         } else {
-//            mPresenter.deleteLike(mArticle);
+            mPresenter.deleteLike(mArticle);
         }
         super.onStop();
     }
@@ -189,6 +225,13 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.article_details_back:
+                finish();
+            case R.id.article_details_user_area:
+                gotoAuthorDetail();
+                break;
+            case R.id.article_details_more:
+                break;
             case R.id.comment_panel_ll:
                 showCommentPanel();
                 break;

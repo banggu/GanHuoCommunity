@@ -1,4 +1,4 @@
-package com.scnu.bangzhu.ganhuocommunity.module.main;
+package com.scnu.bangzhu.ganhuocommunity.module.main.articledetail;
 
 import android.content.Context;
 import android.view.LayoutInflater;

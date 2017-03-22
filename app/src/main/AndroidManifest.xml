@@ -33,7 +33,8 @@
         </activity>
         <activity android:name=".module.register.RegisterActivity"></activity>
         <activity android:name=".module.addarticle.AddArticleActivity"></activity>
-        <activity android:name=".module.main.ArticleDetailsActivity"></activity>
+        <activity android:name=".module.main.articledetail.ArticleDetailsActivity"></activity>
+        <activity android:name=".module.main.authordetail.AuthorDetailActivity"></activity>
     </application>
 
 </manifest>

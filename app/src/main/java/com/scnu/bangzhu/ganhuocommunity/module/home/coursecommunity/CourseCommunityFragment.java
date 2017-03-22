@@ -18,9 +18,7 @@ import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
 import com.scnu.bangzhu.ganhuocommunity.module.home.ArticleListAdapter;
 import com.scnu.bangzhu.ganhuocommunity.module.home.HotArticleListAdapter;
-import com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity.PCCommunityPresenter;
-import com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity.PCCommunityPresenterImpl;
-import com.scnu.bangzhu.ganhuocommunity.module.main.ArticleDetailsActivity;
+import com.scnu.bangzhu.ganhuocommunity.module.main.articledetail.ArticleDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;

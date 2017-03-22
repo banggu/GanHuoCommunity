@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +15,10 @@ import android.widget.ListView;
 
 import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
-import com.scnu.bangzhu.ganhuocommunity.module.home.ArticleListAdapter;
-import com.scnu.bangzhu.ganhuocommunity.module.home.HotArticleListAdapter;
-import com.scnu.bangzhu.ganhuocommunity.module.main.ArticleDetailsActivity;
+import com.scnu.bangzhu.ganhuocommunity.module.main.articledetail.ArticleDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.datatype.BmobPointer;
-import cn.bmob.v3.datatype.BmobRelation;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by chenjianbang on 2016/12/26.

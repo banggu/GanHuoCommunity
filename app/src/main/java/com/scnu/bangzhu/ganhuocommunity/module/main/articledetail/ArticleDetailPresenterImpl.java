@@ -1,12 +1,10 @@
-package com.scnu.bangzhu.ganhuocommunity.module.main;
+package com.scnu.bangzhu.ganhuocommunity.module.main.articledetail;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
 import com.scnu.bangzhu.ganhuocommunity.model.Comment;
 import com.scnu.bangzhu.ganhuocommunity.model.MyUser;
 
 import java.util.List;
-
-import cn.bmob.v3.BmobUser;
 
 /**
  * Created by bangzhu on 2017/2/12.

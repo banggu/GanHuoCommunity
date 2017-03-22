@@ -1,4 +1,4 @@
-package com.scnu.bangzhu.ganhuocommunity.module.main;
+package com.scnu.bangzhu.ganhuocommunity.module.main.articledetail;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
 import com.scnu.bangzhu.ganhuocommunity.model.MyUser;
