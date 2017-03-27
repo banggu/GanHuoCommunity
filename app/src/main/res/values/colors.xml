@@ -13,4 +13,7 @@
     <color name="deliver_bg">#F5F7F8</color>
     <color name="page_bg">#F4F6F9</color>
     <color name="primary_green">#64D339</color>
+    <color name="primary_red">#FC461B</color>
+    <color name="primary_orange">#E05E12</color>
+    <color name="primary_orange_light">#FF7733</color>
 </resources>

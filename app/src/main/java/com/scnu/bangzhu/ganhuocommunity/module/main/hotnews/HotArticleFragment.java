@@ -20,6 +20,7 @@ import android.widget.ListView;
 
 import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
+import com.scnu.bangzhu.ganhuocommunity.model.PageModel;
 import com.scnu.bangzhu.ganhuocommunity.module.home.ArticleListAdapter;
 import com.scnu.bangzhu.ganhuocommunity.module.main.articledetail.ArticleDetailsActivity;
 
@@ -163,7 +164,6 @@ public class HotArticleFragment extends Fragment implements HotArticleView, Swip
         mPresenter.loadHotArticle();
         mPresenter.loadArticle(mPageModel);
         initDotGroup();
-        int p = mPageModel.pageNum;
     }
 
     //初始化点列表视图
@@ -282,17 +282,17 @@ public class HotArticleFragment extends Fragment implements HotArticleView, Swip
         }
     };
 
-    class PageModel {
-        public int pageNum;
-        public int curPage;
-        public int limit;
-        public int actionType;
-
-        public PageModel(int pageNum, int curPage, int limit, int actionType) {
-            this.pageNum = pageNum;
-            this.curPage = curPage;
-            this.limit = limit;
-            this.actionType = actionType;
-        }
-    }
+//    class PageModel {
+//        public int pageNum;
+//        public int curPage;
+//        public int limit;
+//        public int actionType;
+//
+//        public PageModel(int pageNum, int curPage, int limit, int actionType) {
+//            this.pageNum = pageNum;
+//            this.curPage = curPage;
+//            this.limit = limit;
+//            this.actionType = actionType;
+//        }
+//    }
 }

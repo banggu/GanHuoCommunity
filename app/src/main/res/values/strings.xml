@@ -42,4 +42,10 @@
     <string name="followed">已关注</string>
     <string name="share_article">分享文章</string>
     <string name="collect_article">收藏文章</string>
+
+    <!-- 我的 -->
+    <string name="edit">编辑</string>
+    <string name="finish_edit">完成</string>
+    <string name="cancle_edit">取消编辑</string>
+    <string name="my_follow">我的关注</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.scnu.bangzhu.ganhuocommunity.module.main.hotnews;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
+import com.scnu.bangzhu.ganhuocommunity.model.PageModel;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class HotArticlePresenterImpl implements HotArticlePresenter {
     }
 
     @Override
-    public void getPageNum(HotArticleFragment.PageModel pageModel) {
+    public void getPageNum(PageModel pageModel) {
         mModel.getPageNum(pageModel);
     }
 
@@ -38,7 +39,7 @@ public class HotArticlePresenterImpl implements HotArticlePresenter {
     }
 
     @Override
-    public void loadArticle(HotArticleFragment.PageModel pageModel) {
+    public void loadArticle(PageModel pageModel) {
         mModel.loadArticle(pageModel);
     }
 

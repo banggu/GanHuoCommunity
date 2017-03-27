@@ -1,6 +1,10 @@
 package com.scnu.bangzhu.ganhuocommunity.module.main.authordetail;
 
+import com.scnu.bangzhu.ganhuocommunity.model.Article;
 import com.scnu.bangzhu.ganhuocommunity.model.MyUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by bangzhu on 2017/3/19.
@@ -56,12 +60,32 @@ public class AuthorDetailPresenterImpl implements AuthorDetailPresenter {
     }
 
     @Override
-    public void loadShareArticleCount() {
-        mModel.loadShareArticleCount();
+    public void loadShareArticleCount(String authorId) {
+        mModel.loadShareArticleCount(authorId);
     }
 
     @Override
-    public void loadCollectArticleCount() {
-        mModel.loadCollectArticleCount();
+    public void loadShareArticleCountSuccess(List<Article> articleList) {
+        mView.setShareArticleCount(articleList);
+    }
+
+    @Override
+    public void loadShareArticleCountFailtrue(int count) {
+        mView.setShareArticleCount(new ArrayList<Article>());
+    }
+
+    @Override
+    public void loadCollectArticleCount(String authorId) {
+        mModel.loadCollectArticleCount(authorId);
+    }
+
+    @Override
+    public void loadCollectArticleCountSuccess(List<Article> articleList) {
+        mView.setCollectArticleCount(articleList);
+    }
+
+    @Override
+    public void loadCollectArticleCountFailtrue(int count) {
+        mView.setCollectArticleCount(new ArrayList<Article>());
     }
 }

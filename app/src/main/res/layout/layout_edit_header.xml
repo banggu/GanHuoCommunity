@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@drawable/border_bottom_bg"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/edit_header_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_left" />
+
+    <TextView
+        android:id="@+id/edit_header_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="27dp"
+        android:text="李博SEO"
+        android:textSize="18sp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/edit_header_back"
+        android:layout_toEndOf="@+id/edit_header_back"
+        android:layout_marginStart="27dp" />
+
+    <TextView
+        android:id="@+id/edit_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="10dp"
+        android:text="@string/edit"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/finish_edit_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="10dp"
+        android:text="@string/finish_edit"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+</RelativeLayout>

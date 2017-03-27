@@ -5,6 +5,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
+import com.scnu.bangzhu.ganhuocommunity.model.CollectRead;
 import com.scnu.bangzhu.ganhuocommunity.model.MyUser;
 import com.scnu.bangzhu.ganhuocommunity.model.Subscribe;
 import com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity.PCCommunityFragment;
@@ -200,8 +201,10 @@ public class AuthorDetailModelImpl implements AuthorDetailModel {
         query.doSQLQuery(sql.toString(), new SQLQueryListener<MyUser>() {
             @Override
             public void done(BmobQueryResult<MyUser> result, BmobException e) {
-                List<MyUser> list = result.getResults();
-                updateFollowerCount(mCacheStr, list.size(), actionType, followType);
+                if(e == null) {
+                    List<MyUser> list = result.getResults();
+                    updateFollowerCount(mCacheStr, list.size(), actionType, followType);
+                }
             }
         });
     }
@@ -379,13 +382,62 @@ public class AuthorDetailModelImpl implements AuthorDetailModel {
     }
 
     @Override
-    public void loadShareArticleCount() {
-
+    public void loadShareArticleCount(String authorId) {
+        //select include author,* from Article where author = pointer('_User', '6720c14c28');
+        BmobQuery<Article> query = new BmobQuery<Article>();
+        StringBuffer sql = new StringBuffer();
+        sql.append("select include author,* from Article where author = pointer(" +  "'" + "_User" + "'" + "," + "'" + authorId + "'"  + ")");
+        query.doSQLQuery(sql.toString(), new SQLQueryListener<Article>() {
+            @Override
+            public void done(BmobQueryResult<Article> result, BmobException e) {
+                if(e == null) {
+                    List<Article> list = result.getResults();
+                    if(list.size() > 0) {
+                        mPresenter.loadShareArticleCountSuccess(list);
+                    } else {
+                        mPresenter.loadShareArticleCountFailtrue(0);
+                    }
+                } else {
+                    mPresenter.loadShareArticleCountFailtrue(0);
+                }
+            }
+        });
     }
 
     @Override
-    public void loadCollectArticleCount() {
-
+    public void loadCollectArticleCount(String authorId) {
+        BmobQuery<CollectRead> query = new BmobQuery<CollectRead>();
+        query.order("-createdAt");
+        StringBuffer sql = new StringBuffer();
+        sql.append("select * from CollectRead where userId = " + "'" + authorId + "'");
+        //加载更多
+        query.doSQLQuery(sql.toString(), new SQLQueryListener<CollectRead>() {
+            @Override
+            public void done(BmobQueryResult<CollectRead> result, BmobException e) {
+                if(e == null) {
+                    List<CollectRead> list = (List<CollectRead>) result.getResults();
+                    //找得到，说明订阅了
+                    if(list.size() > 0) {
+                        BmobQuery<Article> query = new BmobQuery<Article>();
+                        StringBuffer sql = new StringBuffer();
+                        sql.append("select * from Article where related "+ "collected" + " to pointer(" + "'" + "CollectRead" + "'" + "," + "'" + list.get(0).getObjectId() + "'"  + ")");
+                        query.doSQLQuery(sql.toString(), new SQLQueryListener<Article>() {
+                            @Override
+                            public void done(BmobQueryResult<Article> result, BmobException e) {
+                                if(e == null) {
+                                    List<Article> list = result.getResults();
+                                    mPresenter.loadCollectArticleCountSuccess(list);
+                                }
+                            }
+                        });
+                    } else {//还没订阅，则创建订阅
+                        mPresenter.loadCollectArticleCountFailtrue(0);
+                    }
+                } else {
+                    mPresenter.loadCollectArticleCountFailtrue(0);
+                }
+            }
+        });
     }
 
 }

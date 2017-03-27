@@ -35,6 +35,15 @@
         <activity android:name=".module.addarticle.AddArticleActivity"></activity>
         <activity android:name=".module.main.articledetail.ArticleDetailsActivity"></activity>
         <activity android:name=".module.main.authordetail.AuthorDetailActivity"></activity>
+        <activity android:name=".module.main.authordetail.AuthorArticleListActivity"></activity>
+        <activity android:name=".module.main.me.userarticlelist.UserArticleListActivity"></activity>
+        <activity android:name=".module.main.me.collecteduserlist.UserListActivity"></activity>
+
+        <!-- Service -->
+        <service android:name=".module.main.messagenotification.NotifyMessageService"></service>
+
+        <!-- Receiver-->
+        <receiver android:name=".module.main.messagenotification.RepeatingAlarmReceiver"></receiver>
     </application>
 
 </manifest>

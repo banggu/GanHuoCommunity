@@ -4,25 +4,13 @@ import android.os.Message;
 import android.util.Log;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
-import com.scnu.bangzhu.ganhuocommunity.module.main.MessageFragment;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobQueryResult;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SQLQueryListener;
 
 /**
@@ -44,14 +32,16 @@ public class PCCommunityModelImpl implements PCCommunityModel{
         query.doSQLQuery(sql.toString(), new SQLQueryListener<Article>() {
             @Override
             public void done(BmobQueryResult<Article> result, BmobException e) {
-                List<Article> list = (List<Article>) result.getResults();
-                int count  = list.size();
-                if(count%limit == 0) {
-                    mPageNum = count/limit;
-                } else {
-                    mPageNum = count/limit + 1;
+                if(e == null) {
+                    List<Article> list = (List<Article>) result.getResults();
+                    int count  = list.size();
+                    if(count%limit == 0) {
+                        mPageNum = count/limit;
+                    } else {
+                        mPageNum = count/limit + 1;
+                    }
+                    mPresenter.queryPageNumSuccess(mPageNum);
                 }
-                mPresenter.queryPageNumSuccess(mPageNum);
             }
         });
     }

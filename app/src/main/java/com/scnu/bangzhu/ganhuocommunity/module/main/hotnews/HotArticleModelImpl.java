@@ -4,6 +4,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
+import com.scnu.bangzhu.ganhuocommunity.model.PageModel;
 import com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity.PCCommunityFragment;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class HotArticleModelImpl implements HotArticleModel {
     }
 
     @Override
-    public void getPageNum(final HotArticleFragment.PageModel pageModel) {
+    public void getPageNum(final PageModel pageModel) {
         BmobQuery<Article> query = new BmobQuery<>();
         StringBuffer sql = new StringBuffer();
         sql.append("select include author,* from Article "  + " where likesCount > 10 " + " order by likesCount desc ");
@@ -58,7 +59,7 @@ public class HotArticleModelImpl implements HotArticleModel {
     }
 
     @Override
-    public void loadArticle(final HotArticleFragment.PageModel pageModel) {
+    public void loadArticle(final PageModel pageModel) {
         BmobQuery<Article> query = new BmobQuery<>();
         StringBuffer sql = new StringBuffer();
         sql.append("select include author,* from Article "  + " where likesCount > 10 " + " order by likesCount desc ");

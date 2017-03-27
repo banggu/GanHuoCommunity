@@ -15,7 +15,7 @@ public interface AuthorDetailModel {
 
     void loadFollowerCount(String authorId);
 
-    void loadShareArticleCount();
+    void loadShareArticleCount(String authorId);
 
-    void loadCollectArticleCount();
+    void loadCollectArticleCount(String authorId);
 }

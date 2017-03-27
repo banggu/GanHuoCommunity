@@ -1,6 +1,7 @@
 package com.scnu.bangzhu.ganhuocommunity.module.main.hotnews;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
+import com.scnu.bangzhu.ganhuocommunity.model.PageModel;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 public interface HotArticlePresenter {
 
-    void getPageNum(HotArticleFragment.PageModel pageModel);
+    void getPageNum(PageModel pageModel);
 
     void loadHotArticle();
 
@@ -18,7 +19,7 @@ public interface HotArticlePresenter {
 
     void loadHotArticleFailture();
 
-    void loadArticle(HotArticleFragment.PageModel pageModel);
+    void loadArticle(PageModel pageModel);
 
     void loadArticleSuccess(List<Article> list);
 

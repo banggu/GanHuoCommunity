@@ -16,6 +16,8 @@ import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.module.addarticle.AddArticleActivity;
 import com.scnu.bangzhu.ganhuocommunity.module.home.HomeFragment;
 import com.scnu.bangzhu.ganhuocommunity.module.main.hotnews.HotArticleFragment;
+import com.scnu.bangzhu.ganhuocommunity.module.main.me.MeFragment;
+import com.scnu.bangzhu.ganhuocommunity.module.main.messagenotification.MessageFragment;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
     private FloatingActionButton mAddArticle;
