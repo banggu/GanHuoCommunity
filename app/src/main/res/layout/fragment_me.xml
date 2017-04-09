@@ -2,64 +2,69 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/page_bg">
+    android:background="@color/page_bg"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/personnal_info_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:background="@color/colorPrimaryWhite"
-        android:layout_marginTop="10dp"
         android:layout_marginBottom="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimaryWhite"
+        android:gravity="center_vertical"
         android:padding="10dp">
+
         <ImageView
             android:id="@+id/user_avatar_imageView"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/ic_contacts"
-            android:padding="10dp"/>
+            android:padding="10dp"
+            android:src="@drawable/ic_contacts" />
+
         <TextView
             android:id="@+id/user_name_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="bangke"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/user_avatar_imageView"
-            android:layout_centerVertical="true"/>
+            android:text="bangke" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_right"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_right" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/my_collect_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:background="@drawable/border_top_bg"
+        android:gravity="center_vertical"
         android:padding="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" 我的收藏"
-            android:gravity="center"
             android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/ic_love_click1" />
+            android:drawableLeft="@drawable/ic_love_click1"
+            android:gravity="center"
+            android:text=" 我的收藏" />
+
         <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="72篇"
-            android:textColor="@color/colorPrimaryPray"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:id="@+id/textView" />
+            android:text="72篇"
+            android:textColor="@color/colorPrimaryPray" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/my_read_rl"
         android:layout_width="match_parent"
@@ -70,57 +75,82 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" 阅读过的文章"
-            android:gravity="center"
             android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/ic_eye"/>
+            android:drawableLeft="@drawable/ic_eye"
+            android:gravity="center"
+            android:text=" 我看过的文章" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="357篇"
-            android:textColor="@color/colorPrimaryPray"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:text="357篇"
+            android:textColor="@color/colorPrimaryPray" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/my_collected_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/border_top_bg"
-        android:layout_marginBottom="20dp"
         android:padding="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" 我的关注"
-            android:gravity="center"
             android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/ic_tag"/>
+            android:drawableLeft="@drawable/ic_tag"
+            android:gravity="center"
+            android:text=" 我的关注" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="15个"
-            android:textColor="@color/colorPrimaryPray"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:text="15个"
+            android:textColor="@color/colorPrimaryPray" />
     </RelativeLayout>
+
     <RelativeLayout
-        android:id="@+id/my_setting_rl"
+        android:id="@+id/my_created_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryWhite"
         android:layout_marginBottom="20dp"
+        android:background="@drawable/border_top_bg"
         android:padding="10dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" 设置"
-            android:drawableLeft="@drawable/ic_setting"
-            android:gravity="center"
             android:layout_centerVertical="true"
-            />
+            android:drawableLeft="@drawable/ic_tag"
+            android:gravity="center"
+            android:text=" 我发表的文章" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:text="15个"
+            android:textColor="@color/colorPrimaryPray" />
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/logout_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="20dp"
+        android:background="@color/colorPrimaryWhite"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text=" 退出登录"
+        android:textSize="18sp" />
+
 </LinearLayout>

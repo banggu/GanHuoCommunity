@@ -58,6 +58,7 @@ public class HotArticleModelImpl implements HotArticleModel {
         });
     }
 
+    //热门文章列表
     @Override
     public void loadArticle(final PageModel pageModel) {
         BmobQuery<Article> query = new BmobQuery<>();

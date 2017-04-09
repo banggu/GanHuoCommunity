@@ -114,6 +114,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         mPreference.edit().putString("password", mPwd).commit();
         GanHuoCache.setAccount(mAccount);
         GanHuoCache.setContext(this);
+        showToast("登录成功！");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

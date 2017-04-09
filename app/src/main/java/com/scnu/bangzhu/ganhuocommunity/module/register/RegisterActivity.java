@@ -82,6 +82,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView, View
 
     @Override
     public void navigateToLogin() {
+        showToast("注册成功！");
         LoginActivity.startMe(this);
         finish();
     }

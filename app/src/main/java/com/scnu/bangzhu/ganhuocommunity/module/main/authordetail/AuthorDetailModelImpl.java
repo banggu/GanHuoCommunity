@@ -381,6 +381,7 @@ public class AuthorDetailModelImpl implements AuthorDetailModel {
         });
     }
 
+    //加载作者发表文章数据
     @Override
     public void loadShareArticleCount(String authorId) {
         //select include author,* from Article where author = pointer('_User', '6720c14c28');

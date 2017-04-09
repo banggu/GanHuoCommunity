@@ -13,6 +13,7 @@ public class CollectRead extends BmobObject {
     private Integer collectedCount;
     private BmobRelation read;
     private Integer readCount;
+    private BmobRelation created;
 
     public String getUserId() {
         return userId;
@@ -52,5 +53,13 @@ public class CollectRead extends BmobObject {
 
     public void setReadCount(Integer readCount) {
         this.readCount = readCount;
+    }
+
+    public BmobRelation getCreated() {
+        return created;
+    }
+
+    public void setCreated(BmobRelation created) {
+        this.created = created;
     }
 }

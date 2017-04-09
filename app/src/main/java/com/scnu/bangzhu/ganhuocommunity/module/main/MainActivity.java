@@ -1,5 +1,6 @@
 package com.scnu.bangzhu.ganhuocommunity.module.main;
 
+import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
@@ -15,11 +16,14 @@ import com.scnu.bangzhu.ganhuocommunity.BaseActivity;
 import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.module.addarticle.AddArticleActivity;
 import com.scnu.bangzhu.ganhuocommunity.module.home.HomeFragment;
+import com.scnu.bangzhu.ganhuocommunity.module.login.LoginActivity;
 import com.scnu.bangzhu.ganhuocommunity.module.main.hotnews.HotArticleFragment;
 import com.scnu.bangzhu.ganhuocommunity.module.main.me.MeFragment;
 import com.scnu.bangzhu.ganhuocommunity.module.main.messagenotification.MessageFragment;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener{
+import cn.bmob.v3.BmobUser;
+
+public class MainActivity extends BaseActivity implements View.OnClickListener, MeFragment.OnLogoutListener{
     private FloatingActionButton mAddArticle;
     private ImageView mHomeIcon, mHotNewsIcon, mMsgIcon, mMeIcon;
     private HomeFragment mHomeFragment;
@@ -168,5 +172,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mHotNewsIcon.setImageResource(R.drawable.ic_hotnews);
         mMsgIcon.setImageResource(R.drawable.ic_bell);
         mMeIcon.setImageResource(R.drawable.ic_me);
+    }
+
+    @Override
+    public void onLogout(Uri logoutUri) {
+        BmobUser.logOut();   //清除缓存用户对象
+        LoginActivity.startMe(this);
+        finish();
     }
 }

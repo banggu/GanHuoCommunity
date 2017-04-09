@@ -76,6 +76,7 @@ public class PCCommunityModelImpl implements PCCommunityModel{
         });
     }
 
+    //加载PC问题文章列表
     @Override
     public void loadArticleList(final int page, final int limit, final int actionType, final PCCommunityFragment.StaticHandler handler) {
         if(page > mPageNum) {
