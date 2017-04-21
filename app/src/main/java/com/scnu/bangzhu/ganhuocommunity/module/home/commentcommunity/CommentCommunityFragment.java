@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.scnu.bangzhu.ganhuocommunity.R;
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
+import com.scnu.bangzhu.ganhuocommunity.model.PageModel;
 import com.scnu.bangzhu.ganhuocommunity.module.main.articledetail.ArticleDetailsActivity;
 
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ public class CommentCommunityFragment extends Fragment implements CommentCommuni
     private CommentCommunityPresenter mPresenter;
 
     private LinearLayout mLoadingData;
+    private PageModel mPageModel = new PageModel(0, 0, 10, 0);
+    private boolean isBottom = false;
 
     @Nullable
     @Override
@@ -63,8 +66,8 @@ public class CommentCommunityFragment extends Fragment implements CommentCommuni
 
     private void bindView() {
         mArticleListView.setAdapter(mArticleListAdapter);
-        mPresenter.queryTotalPageNum(mLimit);
-        mPresenter.loadArticleList(mCurPage, mLimit, STATE_REFRESH);
+        mPresenter.queryTotalPageNum(mPageModel);
+        mPresenter.loadArticleList(mPageModel);
     }
 
     private void setListener() {
@@ -81,27 +84,44 @@ public class CommentCommunityFragment extends Fragment implements CommentCommuni
         mArticleListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
-
+                if (i == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+                    if (isBottom) {
+                        // 下载更多数据
+                        mLoadingData.setVisibility(View.VISIBLE);
+                        if(mPageModel.curPage < mPageModel.pageNum - 1) {
+                            mPageModel.actionType = 1;
+                            mPresenter.loadArticleList(mPageModel);
+                        } else {//若为最后一页，则不加载数据
+                            mLoadingData.setVisibility(View.GONE);
+                        }
+                    }
+                }
             }
 
             @Override
             public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 //滑动到最后一行
-                if(firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
-                    //向上滑动
-                    if(firstVisibleItem > mLastVisibleItemPosition) {
-                        mLoadingData.setVisibility(View.VISIBLE);
-                        if(mCurPage < mPageNum) {
-                            mPresenter.loadArticleList(mCurPage, mLimit, STATE_MORE);
-                        } else {
-                            mLoadingData.setVisibility(View.GONE);
-                        }
-                    }
+//                if(firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
+//                    //向上滑动
+//                    if(firstVisibleItem > mLastVisibleItemPosition) {
+//                        mLoadingData.setVisibility(View.VISIBLE);
+//                        if(mCurPage < mPageNum) {
+//                            mPresenter.loadArticleList(mCurPage, mLimit, STATE_MORE);
+//                        } else {
+//                            mLoadingData.setVisibility(View.GONE);
+//                        }
+//                    }
+//                }
+//                if (firstVisibleItem < mLastVisibleItemPosition) {
+//                  //向下滑动
+//                }
+//                mLastVisibleItemPosition = firstVisibleItem;
+
+                if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
+                    isBottom = true;
+                }else{
+                    isBottom = false;
                 }
-                if (firstVisibleItem < mLastVisibleItemPosition) {
-                  //向下滑动
-                }
-                mLastVisibleItemPosition = firstVisibleItem;
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -129,19 +149,22 @@ public class CommentCommunityFragment extends Fragment implements CommentCommuni
     }
 
     @Override
-    public void refreshArticleList(int curPage, int actionType, List<Article> list) {
+    public void refreshArticleList(List<Article> list) {
         mLoadingData.setVisibility(View.GONE);
-        mCurPage = curPage;
-        if(actionType == STATE_REFRESH) {
+        if(mPageModel.actionType == STATE_REFRESH) {
             mArticleList.clear();
         }
         mArticleList.addAll(list);
+        if (mPageModel.actionType == STATE_MORE) {
+            mArticleListView.setSelection(mArticleList.size()-1);
+        }
         mArticleListAdapter.notifyDataSetChanged();
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.loadArticleList(mCurPage, mLimit, STATE_REFRESH);
+        mPageModel.actionType = STATE_REFRESH;
+        mPresenter.loadArticleList(mPageModel);
     }
 }

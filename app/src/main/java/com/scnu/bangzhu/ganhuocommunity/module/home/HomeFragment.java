@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -19,6 +18,7 @@ import com.scnu.bangzhu.ganhuocommunity.module.home.pccommunity.PCCommunityFragm
 import com.scnu.bangzhu.ganhuocommunity.module.home.schoolnewscommunity.SchoolNewsCommunityFragment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -27,8 +27,10 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     private View mView;
     private ViewPager mViewPager;
+    private TabLayout mTabLayout;
     private List<Fragment> mFragmentList;
-    private FragmentPagerAdapter mPagerAdapter;
+    private String[] mTitleList;
+    private TabFragmentAdapter mPagerAdapter;
 
     @Nullable
     @Override
@@ -40,33 +42,22 @@ public class HomeFragment extends Fragment {
     }
 
     private void initView() {
+        mTabLayout = (TabLayout) mView.findViewById(R.id.tab_layout);
         mViewPager = (ViewPager) mView.findViewById(R.id.home_content_viewPager);
     }
 
     private void bindView() {
+        mTitleList = getResources().getStringArray(R.array.home_tab_title);
         mFragmentList = new ArrayList<>();
         mFragmentList.add(new PCCommunityFragment());
         mFragmentList.add(new CourseCommunityFragment());
         mFragmentList.add(new SchoolNewsCommunityFragment());
         mFragmentList.add(new CommentCommunityFragment());
 
-        mPagerAdapter = new FragmentPagerAdapter(getChildFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return mFragmentList.get(position);
-            }
-
-            @Override
-            public int getCount() {
-                return mFragmentList.size();
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                String[] titleArr = getResources().getStringArray(R.array.home_tab_title);
-                return titleArr[position];
-            }
-        };
+        mPagerAdapter = new TabFragmentAdapter(getChildFragmentManager(), mFragmentList, Arrays.asList(mTitleList));
         mViewPager.setAdapter(mPagerAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        mTabLayout.setTabsFromPagerAdapter(mPagerAdapter);
     }
 }

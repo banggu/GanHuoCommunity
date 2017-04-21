@@ -22,11 +22,11 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'cn.bmob.android:bmob-sdk:3.5.3'
-    compile 'com.android.support:design:22.2.1'
+    compile 'com.android.support:design:23.1.1'
     compile 'jp.wasabeef:richeditor-android:1.2.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:support-v4:19.1.0'
+    compile 'com.android.support:support-v4:23.1.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
 }

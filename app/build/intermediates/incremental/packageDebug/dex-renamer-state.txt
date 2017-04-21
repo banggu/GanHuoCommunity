@@ -1,0 +1,4 @@
+#Fri Apr 21 18:13:48 CST 2017
+base.0=/home/chenjianbang/cjb/java/androidStudioWorkspace/GanHuoCommunity/app/build/intermediates/transforms/dex/debug/folders/1000/1f/main
+renamed.0=classes.dex
+file.0=/home/chenjianbang/cjb/java/androidStudioWorkspace/GanHuoCommunity/app/build/intermediates/transforms/dex/debug/folders/1000/1f/main/classes.dex

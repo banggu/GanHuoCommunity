@@ -13,7 +13,7 @@ public interface CourseCommunityView {
 
     void setPageNum(int pageNum);
 
-    void refreshArticleList(int curPage, int actionType, List<Article> list);
+    void refreshArticleList(List<Article> list);
 
     void refreshHotArticleList(List<Article> list);
 

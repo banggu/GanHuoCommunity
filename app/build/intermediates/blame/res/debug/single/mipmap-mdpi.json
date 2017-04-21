@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/chenjianbang/cjb/java/androidStudioWorkspace/GanHuoCommunity/G:\\Android\\AndroidStudioWorkspace\\GanHuoCommunity\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\ic_launcher.png",
+        "source": "/home/chenjianbang/cjb/java/androidStudioWorkspace/GanHuoCommunity/G:\\Android\\AndroidStudioWorkspace\\GanHuoCommunity\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "/home/chenjianbang/cjb/java/androidStudioWorkspace/GanHuoCommunity/app/build/intermediates/res/merged/debug/mipmap-mdpi/ic_launcher.png",
+        "source": "/home/chenjianbang/cjb/java/androidStudioWorkspace/GanHuoCommunity/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+    }
+]

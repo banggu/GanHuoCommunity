@@ -1,6 +1,7 @@
 package com.scnu.bangzhu.ganhuocommunity.module.home.schoolnewscommunity;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
+import com.scnu.bangzhu.ganhuocommunity.model.PageModel;
 
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class SchoolNewsCommunityPresenterImpl implements SchoolNewsCommunityPres
     }
 
     @Override
-    public void queryTotalPageNum(int limit) {
-        mModel.queryTotalPageNum(limit);
+    public void queryTotalPageNum(PageModel pageModel) {
+        mModel.queryTotalPageNum(pageModel);
     }
 
     @Override
@@ -47,13 +48,13 @@ public class SchoolNewsCommunityPresenterImpl implements SchoolNewsCommunityPres
     }
 
     @Override
-    public void loadArticleList(final int page, final int limit, final int actionType) {
-        mModel.loadArticleList(page, limit, actionType);
+    public void loadArticleList(PageModel pageModel) {
+        mModel.loadArticleList(pageModel);
     }
 
     @Override
-    public void loadArticleListSuccess(int curPage, int actionType, List<Article> list) {
-        mView.refreshArticleList(curPage, actionType, list);
+    public void loadArticleListSuccess(List<Article> list) {
+        mView.refreshArticleList(list);
     }
 
     @Override

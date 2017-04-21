@@ -4,6 +4,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
+import com.scnu.bangzhu.ganhuocommunity.model.PageModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +19,13 @@ import cn.bmob.v3.listener.SQLQueryListener;
  */
 public class PCCommunityModelImpl implements PCCommunityModel{
     private PCCommunityPresenter mPresenter;
-    private int mPageNum;
 
     public PCCommunityModelImpl(PCCommunityPresenter presenter) {
         mPresenter = presenter;
     }
 
     @Override
-    public void queryTotalPageNum(final int limit) {
+    public void queryTotalPageNum(final PageModel pageModel) {
         BmobQuery<Article> query = new BmobQuery<>();
         StringBuffer sql = new StringBuffer();
         sql.append("select include author,* from Article where type = " + "'" + "PC问题" + "'");
@@ -35,12 +35,11 @@ public class PCCommunityModelImpl implements PCCommunityModel{
                 if(e == null) {
                     List<Article> list = (List<Article>) result.getResults();
                     int count  = list.size();
-                    if(count%limit == 0) {
-                        mPageNum = count/limit;
+                    if(count%pageModel.limit == 0) {
+                        pageModel.pageNum = count/pageModel.limit;
                     } else {
-                        mPageNum = count/limit + 1;
+                        pageModel.pageNum = count/pageModel.limit + 1;
                     }
-                    mPresenter.queryPageNumSuccess(mPageNum);
                 }
             }
         });
@@ -78,20 +77,18 @@ public class PCCommunityModelImpl implements PCCommunityModel{
 
     //加载PC问题文章列表
     @Override
-    public void loadArticleList(final int page, final int limit, final int actionType, final PCCommunityFragment.StaticHandler handler) {
-        if(page > mPageNum) {
-            return;
-        }
+    public void loadArticleList(final PageModel pageModel) {
         BmobQuery<Article> query = new BmobQuery<>();
         query.order("-createdAt");
         StringBuffer sql = new StringBuffer();
         sql.append("select include author,* from Article where type = " + "'" + "PC问题" + "'");
         //加载更多
-        if(actionType == PCCommunityFragment.STATE_MORE) {
+        if(pageModel.actionType == PCCommunityFragment.STATE_MORE) {
+            int page = pageModel.curPage + 1;
             // 跳过之前页数并去掉重复数据
-            sql.append(" limit " + (page*limit) + "," + limit);
+            sql.append(" limit " + (page*pageModel.limit) + "," + pageModel.limit);
         } else {
-            sql.append(" limit " + "0," + limit);
+            sql.append(" limit " + "0," + pageModel.limit);
         }
         query.doSQLQuery(sql.toString(), new SQLQueryListener<Article>(){
 
@@ -100,19 +97,17 @@ public class PCCommunityModelImpl implements PCCommunityModel{
 				if(e == null){
 					List<Article> list = (List<Article>) result.getResults();
 					if(list!=null && list.size()>0){
-                        int curPage = page;
-                        if(actionType == PCCommunityFragment.STATE_REFRESH) {
-                            curPage = 1;
+                        int curPage = pageModel.curPage;
+                        if(pageModel.actionType == PCCommunityFragment.STATE_REFRESH) {
+                            curPage = 0;
                         } else {
                             curPage++;
                         }
-                        Message msg = new Message();
-                        msg.what = 12581;
-                        msg.arg1 = curPage;
-                        //handler.sendMessage(msg);
-                        mPresenter.loadArticleListSuccess(curPage, actionType, list);
+                        pageModel.curPage = curPage;
+                        mPresenter.loadArticleListSuccess(list);
 					}else{
 						Log.i("HZWING", "查询成功，无数据返回");
+                        mPresenter.loadArticleListFailtrue();
 					}
 				}else{
 					Log.i("HZWING", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());

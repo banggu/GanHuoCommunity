@@ -1,7 +1,7 @@
 package com.scnu.bangzhu.ganhuocommunity.model;
 
 /**
- * Created by bangzhu on 2017/4/1.
+ * @author chenjianbang
  */
 
 public class ArticleFlag {

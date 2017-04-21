@@ -5,6 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.scnu.bangzhu.ganhuocommunity.R;
 
@@ -15,12 +19,12 @@ import java.util.List;
  */
 public class TabFragmentAdapter extends FragmentStatePagerAdapter{
     private List<Fragment> mFragmentList;
-    private String[] mTitleArr;
+    private List<String> mTitleList;
 
-    public TabFragmentAdapter(Context context, FragmentManager fm, List<Fragment> fragmentList) {
+    public TabFragmentAdapter(FragmentManager fm, List<Fragment> fragmentList, List<String> titleList) {
         super(fm);
         mFragmentList = fragmentList;
-        mTitleArr = context.getResources().getStringArray(R.array.home_tab_title);
+        mTitleList = titleList;
     }
 
     @Override
@@ -35,6 +39,6 @@ public class TabFragmentAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTitleArr[position];
+        return mTitleList.get(position);
     }
 }

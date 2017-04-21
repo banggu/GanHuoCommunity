@@ -9,7 +9,7 @@
     </style>
 
     <style name="MyTabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
     
     <style name="SpinnerStyle">
@@ -20,4 +20,5 @@
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_bg</item>
     </style>
+
 </resources>

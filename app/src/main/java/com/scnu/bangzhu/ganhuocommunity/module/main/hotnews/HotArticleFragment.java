@@ -58,6 +58,7 @@ public class HotArticleFragment extends Fragment implements HotArticleView, Swip
     //ListView 中最后一个可见的列表项下标
     private int mLastVisibleItemPosition = 0;
     private PageModel mPageModel = new PageModel(0, 0, 10, 0);
+    private boolean isBottom = false;
 
     @Nullable
     @Override
@@ -126,15 +127,9 @@ public class HotArticleFragment extends Fragment implements HotArticleView, Swip
         mHotArticle.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                //滑动到最后一行
-                if(firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
-                    //向上滑动
-                    if(firstVisibleItem > mLastVisibleItemPosition) {
+                if (i == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+                    if (isBottom) {
+                        // 下载更多数据
                         mLoadingData.setVisibility(View.VISIBLE);
                         if(mPageModel.curPage < mPageModel.pageNum - 1) {
                             mPageModel.actionType = 1;
@@ -144,10 +139,33 @@ public class HotArticleFragment extends Fragment implements HotArticleView, Swip
                         }
                     }
                 }
-                if (firstVisibleItem < mLastVisibleItemPosition) {
-                    //向下滑动
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                //滑动到最后一行
+//                if(firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
+//                    //向上滑动
+//                    if(firstVisibleItem > mLastVisibleItemPosition) {
+//                        mLoadingData.setVisibility(View.VISIBLE);
+//                        if(mPageModel.curPage < mPageModel.pageNum - 1) {
+//                            mPageModel.actionType = 1;
+//                            mPresenter.loadArticle(mPageModel);
+//                        } else {//若为最后一页，则不加载数据
+//                            mLoadingData.setVisibility(View.GONE);
+//                        }
+//                    }
+//                }
+//                if (firstVisibleItem < mLastVisibleItemPosition) {
+//                    //向下滑动
+//                }
+//                mLastVisibleItemPosition = firstVisibleItem;
+
+                if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
+                    isBottom = true;
+                }else{
+                    isBottom = false;
                 }
-                mLastVisibleItemPosition = firstVisibleItem;
             }
         });
 

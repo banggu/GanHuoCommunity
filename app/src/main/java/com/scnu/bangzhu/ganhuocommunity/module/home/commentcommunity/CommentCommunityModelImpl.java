@@ -3,6 +3,7 @@ package com.scnu.bangzhu.ganhuocommunity.module.home.commentcommunity;
 import android.util.Log;
 
 import com.scnu.bangzhu.ganhuocommunity.model.Article;
+import com.scnu.bangzhu.ganhuocommunity.model.PageModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,33 +24,39 @@ public class CommentCommunityModelImpl implements CommentCommunityModel {
     }
 
     @Override
-    public void queryTotalPageNum(final int limit) {
+    public void queryTotalPageNum(final PageModel pageModel) {
         BmobQuery<Article> query = new BmobQuery<>();
         StringBuffer sql = new StringBuffer();
         sql.append("select include author,* from Article where type = " + "'" + "我要吐槽" + "'");
         query.doSQLQuery(sql.toString(), new SQLQueryListener<Article>() {
             @Override
             public void done(BmobQueryResult<Article> result, BmobException e) {
-                List<Article> list = (List<Article>) result.getResults();
-                int count  = list.size();
-                int pageNum = count/limit + 1;
-                mPresenter.queryPageNumSuccess(pageNum);
+                if(e == null) {
+                    List<Article> list = (List<Article>) result.getResults();
+                    int count  = list.size();
+                    if(count%pageModel.limit == 0) {
+                        pageModel.pageNum = count/pageModel.limit;
+                    } else {
+                        pageModel.pageNum = count/pageModel.limit + 1;
+                    }
+                }
             }
         });
     }
 
     @Override
-    public void loadArticleList(final int page, final int limit, final int actionType) {
+    public void loadArticleList(final PageModel pageModel) {
         BmobQuery<Article> query = new BmobQuery<>();
         query.order("-createdAt");
         StringBuffer sql = new StringBuffer();
         sql.append("select include author,* from Article where type = " + "'" + "我要吐槽" + "'");
         //加载更多
-        if(actionType == CommentCommunityFragment.STATE_MORE) {
+        if(pageModel.actionType == CommentCommunityFragment.STATE_MORE) {
+            int page = pageModel.curPage + 1;
             // 跳过之前页数并去掉重复数据
-            sql.append(" limit " + (page*limit) + "," + limit);
+            sql.append(" limit " + (page * pageModel.limit) + "," + pageModel.limit);
         } else {
-            sql.append(" limit " + "0," + limit);
+            sql.append(" limit " + "0," + pageModel.limit);
         }
         query.doSQLQuery(sql.toString(), new SQLQueryListener<Article>(){
 
@@ -58,21 +65,18 @@ public class CommentCommunityModelImpl implements CommentCommunityModel {
 				if(e ==null){
 					List<Article> list = (List<Article>) result.getResults();
 					if(list!=null && list.size()>0){
-                        for (Article article : list) {
-                            Log.i("HZWING", article.getAuthor().getUsername()+"\n"+article.getCreatedAt()+"\n"+article.getImageUrl());
-                        }
-                        int curPage = page;
-                        if(actionType == CommentCommunityFragment.STATE_REFRESH) {
+                        int curPage = pageModel.curPage;
+                        if(pageModel.actionType == CommentCommunityFragment.STATE_REFRESH) {
                             curPage = 1;
                         } else {
                             curPage++;
                         }
-                        mPresenter.loadArticleListSuccess(curPage, actionType, list);
+                        pageModel.curPage = curPage;
+                        mPresenter.loadArticleListSuccess(list);
 					}else{
-						Log.i("HZWING", "查询成功，无数据返回");
+                        mPresenter.loadArticleListFailtrue();
 					}
 				}else{
-					Log.i("HZWING", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
                     mPresenter.loadArticleListFailtrue();
 				}
 			}
